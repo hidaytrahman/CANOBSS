@@ -537,6 +537,21 @@ html, body {
   overflow-y: scroll;
 }
 
+.submit-button {
+  background: #F44336;
+    max-width: 82px;
+    text-align: center;
+    color: #fff;
+    margin: 2% auto;
+    cursor: pointer;
+}
+
+.alert-listing {
+  font-size: 10px;
+}
+
+
+
 /* VIEW SPECIFIC STYLES */
 .diff-section {
   padding: 5px;

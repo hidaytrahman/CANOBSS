@@ -192,16 +192,16 @@ function createGraph() {
                 const users = response.data;
                 console.log(`GET list data`, users);
                 console.log(`GET list data`, users.length);
-                for(let i=0; i<users.length; i++) {
+                for (let i = 0; i < users.length; i++) {
                     console.log(users[i]);
                     let _user = users[i];
-                    document.querySelector('#results-data #tdata').innerHTML += '<tr><td>'+_user.IP_ADDRESS+'</td></tr>';
+                    document.querySelector('#results-data #tdata').innerHTML += '<tr><td>' + _user.IP_ADDRESS + '</td></tr>';
                 }
-                  
+
             })
             .catch(error => console.error(error));
     };
-    
+
     fetchUsers();
 
     Desktop.createWindow({
@@ -261,40 +261,58 @@ $(".charm-tile").on("click", function () {
 });
 
 
+$("#notification").on("click", function () {
+    setAlert();
+    getAlerts();
+});
+
+
+
+var notificationExist = localStorage.getItem('notificationList');
 function setAlert() {
-
     var inputs = $(".set-alert .input-area");
-
     var notificationsList = [];
+    
+    if(notificationExist) {
+        notificationsList = notificationExist;
+        console.log('type', typeof notificationsList);
+        notificationsList = notificationsList.split(",");
+        console.log('type', typeof notificationsList);
+    } else {
+        notificationsList = [];
+    }
 
-    $(".submit-button").on("click", function () { 
+    $(".submit-button").on("click", function () {
         var something1 = inputs.find('.something1').val();
         var something2 = inputs.find('.something2').val();
         var something3 = inputs.find('.something3').val();
-        
-        var notification = something1+' of a '+something2+' by '+something3;
-        notificationsList.push(notification)
-        localStorage.setItem('notificationList',notificationsList)
+
+        if (something3 == '') {
+            alert('Please enter value');
+        } else {
+            var notification = something1 + ' of a ' + something2 + ' by ' + something3;
+            notificationsList.push(notification)
+            localStorage.setItem('notificationList', notificationsList);
+        }
+
+        getAlerts();
     });
 }
 
 function getAlerts() {
-   var notificationExist =  localStorage.getItem('notificationList');
-   if(notificationExist) {
+    
+    if (notificationExist) {
         var notificationsList = notificationExist.split(',');
-        console.log('notificationsList',notificationsList);
-        for(var  i = 0; i<notificationsList.length; i++) {
-            $(".alerts-listing").append('<p>'+notificationsList[i]+'</p>');
+        console.log('notificationsList', notificationsList);
+        for (var i = 0; i < notificationsList.length; i++) {
+            $(".alerts-listing").append('<p>' + notificationsList[i] + '</p>');
         }
-        
-   }
-  
+    } else {
+        alert('Create alert first');
+    }
 }
 
-setAlert();
-getAlerts();
-
-/* Just to experiments 
+/* Just to experiments
 (() => {
     createSearchBar();
 })()
