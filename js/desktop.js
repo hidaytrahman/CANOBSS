@@ -124,8 +124,24 @@ function createWindowWithCustomButtons() {
         width: 360,
         icon: "<span class='mif-" + w_icons[index] + "'></span>",
         title: w_titles[index],
-        content: "<div class='p-2'>This is desktop demo created with Metro 4 Components Library.<br><br>This window has a custom buttons in caption.</div>"
+        content: ` <section class="network-graph-video" id="vim">
+          <div id="vim" width="2000" height="700"></div>
+        </section>`
     });
+    
+    var timestamps = ["20-10-2019","21-10-2019","22-10-2019","23-10-2019","24-10-2019","25-10-2019"];
+
+    var i;
+    for (i = 0; i < timestamps.length; i++)
+    {
+        (function(i){
+        setTimeout(function(){
+         
+         draw_range(timestamps[i]);
+         
+         }, i * 8000);
+        })(i);
+    }
 }
 
 function createWindowModal() {
@@ -161,9 +177,14 @@ function createWindowYoutube() {
         width: 500,
         icon: "<span class='mif-youtube'></span>",
         title: "Youtube video",
-        content: "https://youtu.be/ZlhUJ6QkvL8",
+        content: `<section class="network-graph-wrapper" id="vid">
+        <input type="text" id="cypherBox" class="bar" wrap="hard" style="width:100%;  align:center;" class="form-control" > 
+        
+        <div id="vid" width="2000" height="700"></div>
+        </section>`,
         clsContent: "bg-dark"
     });
+    draw_live(1);
 }
 
 function createSearchBar() {
@@ -210,24 +231,43 @@ function createGraph() {
         width: 700,
         icon: "<span class='mif-flow-parallel'></span>",
         title: "Data Graph",
-        content: `<h2>Hidayt</h2> <hr>
-        <table id="results-data">
-            <thead>
-            <tr>
-                <th>IP Address</th>
-                <th>Contact</th>
-                <th>Country</th>
-            </tr>
-            </thead>
-            <tbody id="tdata">
-            </tbody>
-        </table>
+        content: `<div class="searchbox"  id="searchbox" value="">
+        <input class="input" size="50" type="text" placeholder="English Query" id="englishTextBoxId">
+        <button onclick="myFunction()">Search in Cypher</button>
+        <section class="network-graph-wrapper" id="viz">
+        <input type="text" id="cypherBox" class="bar" wrap="hard" style="width:100%;  align:center;" class="form-control" > 
+        
+        <div id="viz" width="2000" height="700"></div>
+        </section>
         `,
         clsContent: "bg-light"
     });
+    
+     draw("1");                 
+                   var codeMirrorEditor = CodeMirror.fromTextArea(document.getElementById("cypherBox"), {
+                        mode:'cypher',
+                        lineNumbers: false,
+                        lineWrapping: false,
+                        scrollbarStyle: "native",
+                        theme: 'neo'
+                    });
+                      var code = 
+                    ``;
+                    if(document.getElementById("insert") != null){
+                    document.getElementById("insert").innerHTML = codeMirrorEditor.getValue(code);
+                    } 
 }
 
-
+ 
+ function myFunction(codeMirrorEditor){
+      if(document.getElementById("insert") != null){
+                    document.getElementById("insert").innerHTML = englishParser("englishTextBoxId", codeMirrorEditor);   
+      }                    
+                    cypher_set = englishParser("englishTextBoxId", codeMirrorEditor);
+                    draw(cypher_set);
+                    };
+                    
+                    
 function createNodeDiff() {
     Desktop.createWindow({
         resizeable: true,
@@ -236,10 +276,10 @@ function createNodeDiff() {
         icon: "<span class='mif-done_all'></span>",
         title: "Node comparison",
         content: `
-        <div class="diff-section">
-        <h2 class="model-title">Node Diff. between 2 Dates</h2> <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        </div>
+        <input type="date" id="graphDate1">
+        <input type="date" id="graphDate2">
+        <input type="submit" onclick="createTimeGraph()"><br><br>
+        <div width="400" height="400" id="date1" class="timeSvg"></div><div width="400" height="400" id="date2" class="timeSvg"></div>
         `,
         clsContent: "bg-light"
     });
