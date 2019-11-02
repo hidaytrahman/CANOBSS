@@ -187,7 +187,7 @@ function createSearchBar() {
 
 function createGraph() {
     const fetchUsers = () => {
-        axios.get('http://localhost:8081/ml-ai/data/data.json')
+        axios.get('http://localhost:4242/ml-ai/data/data.json')
             .then(response => {
                 const users = response.data;
                 console.log(`GET list data`, users);
@@ -230,9 +230,9 @@ function createGraph() {
 
 function createNodeDiff() {
     Desktop.createWindow({
-        resizeable: true,
-        draggable: true,
-        width: 700,
+        resizeable: false,
+        draggable: false,
+        width: '100vw',
         icon: "<span class='mif-done_all'></span>",
         title: "Node comparison",
         content: `
@@ -260,24 +260,30 @@ $(".charm-tile").on("click", function () {
     $(this).toggleClass("active");
 });
 
-
-$("#notification").on("click", function () {
-    setAlert();
-    getAlerts();
+var isNotificationOn = false;
+// new-alert
+$("#new-alert").on("click", function () { 
+    $('.set-alert-form').addClass('showIt');
 });
 
+$("#notification").on("click", function () {
+    isNotificationOn = !isNotificationOn;
+    console.log('isNotificationOn', isNotificationOn);
+    if (isNotificationOn) {
+        /*setAlert();
+        getAlerts();*/
+    }
 
+});
 
 var notificationExist = localStorage.getItem('notificationList');
 function setAlert() {
-    var inputs = $(".set-alert .input-area");
+    var inputs = $(".set-alert-form .input-area");
     var notificationsList = [];
-    
-    if(notificationExist) {
+
+    if (notificationExist) {
         notificationsList = notificationExist;
-        console.log('type', typeof notificationsList);
         notificationsList = notificationsList.split(",");
-        console.log('type', typeof notificationsList);
     } else {
         notificationsList = [];
     }
@@ -293,24 +299,45 @@ function setAlert() {
             var notification = something1 + ' of a ' + something2 + ' by ' + something3;
             notificationsList.push(notification)
             localStorage.setItem('notificationList', notificationsList);
+            $('.set-alert-form').removeClass('showIt');
+            getAlerts();
         }
 
-        getAlerts();
     });
 }
 
 function getAlerts() {
-    
     if (notificationExist) {
         var notificationsList = notificationExist.split(',');
-        console.log('notificationsList', notificationsList);
+        $(".alerts-listing").html('');
         for (var i = 0; i < notificationsList.length; i++) {
-            $(".alerts-listing").append('<p>' + notificationsList[i] + '</p>');
+            const alertListHTML = document.createElement('div');
+            alertListHTML.className = 'alert';
+            const alert = document.createTextNode(notificationsList[i]);
+            alertListHTML.appendChild(alert);
+            $(".alerts-listing").append(alertListHTML);
         }
+
+        setInterval(function(){
+            var randomPosition = Math.floor(Math.random() * 4);
+            console.log(randomPosition);
+            $(".alerts-listing .alert").removeClass('highlighter');
+            $(".alerts-listing .alert:nth-child("+randomPosition+")").addClass('highlighter');
+        },1000);
+
+        
+        
     } else {
         alert('Create alert first');
     }
 }
+
+/*
+    setAlert();
+   */
+
+   getAlerts();
+   setAlert();
 
 /* Just to experiments
 (() => {
