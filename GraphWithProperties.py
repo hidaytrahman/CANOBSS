@@ -14,6 +14,8 @@ import os
 import sompy
 import numpy as np
 from flask import send_from_directory
+from flask import jsonify
+from flask import request
 
 
 data = pd.read_csv("C:\\Thales_Hackathon\\ia-crime-moreno.csv")
@@ -44,10 +46,16 @@ def send_images(path):
 def send_json(path):
     return send_from_directory('ui\json', path)
 
-@app.route('/timeGraph/<date>')
-def timeGraph(date):
+@app.route('/timeGraph', methods=['POST'])
+def timeGraph():
+    date = ""
+    
+    if request.method == "POST":
+        date = request.form["date"]
+    
+    print(date)
     if os.path.exists('ui/json/graph-'+date+'.json'):
-        return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        return "Success", 200 
     
     networkGraph = nx.DiGraph()
 
@@ -55,7 +63,9 @@ def timeGraph(date):
         if(data['Time'][i][:10] == date): 
             networkGraph.add_edge(data['Source'][i],data['Destination'][i], time = data['Time'][i])
     
-        
+    if(len(networkGraph.nodes) == 0):
+        return "No Network Data Found", 400
+    
     for n in networkGraph:
         networkGraph.node[n]['name'] = n
         
@@ -66,7 +76,7 @@ def timeGraph(date):
     closeness_centrality = nx.closeness_centrality(networkGraph)
     degree_centrality = nx.degree_centrality(networkGraph)
     betweenness_centrality = nx.betweenness_centrality(networkGraph)
-    eigenvector_centrality = nx.eigenvector_centrality(networkGraph, max_iter=1000)
+    eigenvector_centrality = nx.eigenvector_centrality(networkGraph, max_iter=100000)
     for node in networkGraph.nodes:
         graphData.loc[count] = [node, float(networkGraph.in_degree[node]), float(networkGraph.out_degree[node]), closeness_centrality[node], degree_centrality[node], betweenness_centrality[node], eigenvector_centrality[node]]
         count+=1
@@ -77,9 +87,22 @@ def timeGraph(date):
     som.train(n_job=1, verbose='info') 
     
    
-    map_labels = som.cluster(n_clusters=6)
+    map_labels = som.cluster(n_clusters=4)
     data_labels = np.array([map_labels[int(k)] for k in som._bmu[0]])
+    unique, counts = np.unique(data_labels, return_counts=True)
+    unique_count = dict(zip(unique, counts))
+    sorted_dict = sorted(unique_count.items(), key = 
+             lambda kv:(kv[1], kv[0]))
     
+    dict_final = {}
+    order_count = 0
+    for entry in sorted_dict:
+        dict_final[entry[0]] = order_count
+        order_count+=1
+        
+    for i in range(len(data_labels)):
+        data_labels[i] = dict_final[data_labels[i]]
+        
     count = 0
     node_cluster = {}
     for node in networkGraph.nodes:
@@ -94,8 +117,7 @@ def timeGraph(date):
     with open('ui/json/graph-'+date+'.json', 'w') as f:
         json.dump(timeGraphJSON, f, ensure_ascii=False)
         
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
-
+    return "Success", 200 
 print('\nGo to http://localhost:8000 to see the example\n')
 app.run(port=8000)
 
