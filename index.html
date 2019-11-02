@@ -2,6 +2,67 @@
 <html lang="en">
 
 <head>
+
+<style type="text/css">
+   <!-- Codemirror for syntax highlighting -->
+            <link rel="stylesheet" href="./codemirror-5.49.2/lib/codemirror.css">
+            <link rel="stylesheet" href="./codemirror-5.49.2/theme/neo.css">
+            html, body {
+                font: 8pt arial;
+            }
+    
+            #viz {
+                width: 100%;
+                height: 1200px;
+                border: 1px solid darkgray;
+                font: 22pt arial;
+                display: inline-block;
+            }
+            
+            #vid {
+                width: 100%;
+                height: 1200px;
+                border: 1px solid darkgray;
+                font: 22pt arial;
+                display: inline-block;
+            }
+            
+            #vim {
+                width: 100%;
+                height: 1200px;
+                border: 1px solid darkgray;
+                font: 22pt arial;
+                display: inline-block;
+            }
+            #date1 {
+                width: 100%;
+                height: 1200px;
+                border: 1px solid darkgray;
+                font: 22pt arial;
+                display: inline-block;
+            }
+            #date2 {
+                width: 100%;
+                height: 1200px;
+                border: 1px solid darkgray;
+                font: 22pt arial;
+                display: inline-block;
+            }
+            #insert
+            {
+                width: 900px;
+                height: 40px;
+                border: 1px solid darkgray;
+                font: 15pt arial;
+            }
+            #searchbox
+            {
+                width: 900px;
+                height: 40px;
+                border: 1px solid darkgray;
+                font: 15pt arial;
+            }
+             </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -209,7 +270,15 @@
 
     <script src="js/vendor/metro.js"></script>
     <script src="js/desktop.js"></script>
-
+    <script src="node_modules/nearley/lib/nearley.js"></script>
+    <script src="./js/english2cypher.js"></script>
+    <script src="./js/grammar.js"></script>
+    <script src="./codemirror-5.49.2/lib/codemirror.js"></script>
+    <script src="./codemirror-5.49.2/mode/cypher/cypher.js"></script>
+    <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+    
+     <script src="js/graph.js"></script>
+    
     <!-- AJAX Stuff-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
