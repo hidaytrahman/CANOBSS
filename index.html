@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     <link href="css/desktop.css" rel="stylesheet">
 
-    <title>Desktop demo - Data Scientist</title>
+    <title>CANOBSS</title>
 
     <style>
         .window-area {
@@ -29,9 +29,12 @@
         <div class="h-100 d-flex flex-column">
             <div class="alert-wrapper">
                 <div class="show-alert-wrapper">
-                    <p>Get Alert</p>
+                    <p>Alerts</p>
                     <section class="alerts-listing">
-
+                        <div class="alert">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+                          </div>
                     </section>
                 </div>
                 <div class="set-alert-wrapper">
@@ -53,10 +56,10 @@
                                     <option value="1.5.8.5.">1.5.8.5.</option>
                                     <option value="1.6.8.5.">1.6.8.5.</option>
                                 </select>
-                                <input type="text" class="something3" required placeholder="Input something" />
+                                <input type="text" class="set-control something3" required placeholder="Input something" />
                                 <div class="submit-button">Done</div>
                             </div>
-                          
+
                         </div>
                     </div>
 
@@ -65,10 +68,10 @@
             <!-- Alert wrapper end here -->
 
             <div class="text-center m-4">
-                    <span>Brief Panel</span>
-                </div>
+                <span>Brief Panel</span>
+            </div>
             <div class="charm-top">
-                
+
 
                 <div class="charm-notify">
                     <span class="icon mif-info"></span>
@@ -113,22 +116,8 @@
                     </div>
                 </div>
 
-                
-
-                <!-- 
-                <div class="charm-notify">
-                    <span class="icon mif-info"></span>
-                    <div class="title">You have a news</div>
-                    <div class="content">The hornpipe fears with endurance, vandalize the galley until it waves.</div>
-                </div>
-
-                <div class="clear mt-4 reduce-1">
-                    <span class="place-left c-pointer">Collapse</span>
-                    <span class="place-right c-pointer">Clear notifies</span>
-                </div>
-                -->
             </div>
-<hr>
+            <hr>
 
             <div class="charm-bottom mt-auto">
                 <div class="d-flex">
@@ -155,7 +144,6 @@
 
     <div class="desktop">
         <div class="window-area">
-
             <section class="search-area">
                 <div class="search-wrapper">
                     <input type="text" class="input-text" id="write-command" placeholder="Search or speak">
@@ -201,12 +189,15 @@
         </div>
     </div>
 
-
+    <!-- Scripts -->
     <script src="js/vendor/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
+
+    <!-- VOICE -->
     <script src="js/vendor/annyang.min.js"></script>
     <script src="js/voice-commands.js"></script>
 
+    <!-- MAIN THEME -->
     <script src="js/vendor/metro.js"></script>
     <script src="js/desktop.js"></script>
 
