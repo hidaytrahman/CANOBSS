@@ -90,12 +90,27 @@ function createWindow() {
         width: 300,
         icon: "<span class='mif-" + w_icons[index] + "'></span>",
         title: w_titles[index],
-        content: "<div class='p-2'>This is desktop demo created with Metro 4 Components Library</div>"
+        content: `
+         <h2>Top 10 Ip Addresses by property</h2>
+<p>Select the property value</p>
+
+<div class="dropdown">
+  <button class="dropbtn">Property</button>
+  <div class="dropdown-content">
+    <li><a href="http://10.164.27.117:5005/InDegree">InDegree</a></li>
+    <li><a href="http://10.164.27.117:5005/OutDegree">OutDegree</a></li>
+    <li><a href="http://10.164.27.117:5005/ClosenessC">ClosenessC</a></li>
+    <li><a href="http://10.164.27.117:5005/DegreeC">DegreeC</a></li>
+    <li><a href="http://10.164.27.117:5005/BetweennessC">BetweennessC</a></li>
+    <li><a href="http://10.164.27.117:5005/EigenVectorC">EigenVectorC</a> </li>
+  </div>
+</div> 
+   `
     });
 
-    setTimeout(function () {
-        w.setContent("New window content");
-    }, 3000);
+  //  setTimeout(function () {
+    //    w.setContent("New window content");
+    //}, 3000);
 }
 
 function createWindowWithCustomButtons() {
