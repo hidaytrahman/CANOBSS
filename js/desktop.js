@@ -261,8 +261,7 @@ $(".charm-tile").on("click", function () {
 });
 
 var isNotificationOn = false;
-// new-alert
-$("#new-alert").on("click", function () { 
+$("#new-alert").on("click", function () {
     $('.set-alert-form').addClass('showIt');
 });
 
@@ -277,6 +276,22 @@ $("#notification").on("click", function () {
 });
 
 var notificationExist = localStorage.getItem('notificationList');
+
+var notificationEnable = localStorage.getItem('notificationEnable');
+function notificationAppearance() {
+    // notification appearance handling
+    console.log('notificationEnable', notificationEnable);
+    if (notificationEnable) {
+        $('.alerts-listing').addClass('showing-feature');
+        $('.show-notifications').prop('checked', true);
+    } else {
+        $('.alerts-listing').removeClass('showing-feature');
+        $('.show-notifications').prop('checked', false);
+    }
+}
+notificationAppearance();
+
+
 function setAlert() {
     var inputs = $(".set-alert-form .input-area");
     var notificationsList = [];
@@ -292,7 +307,6 @@ function setAlert() {
         var something1 = inputs.find('.something1').val();
         var something2 = inputs.find('.something2').val();
         var something3 = inputs.find('.something3').val();
-
         if (something3 == '') {
             alert('Please enter value');
         } else {
@@ -302,8 +316,14 @@ function setAlert() {
             $('.set-alert-form').removeClass('showIt');
             getAlerts();
         }
-
     });
+
+    $(".show-notifications").on("click", function () {
+        notificationEnable = !notificationEnable;
+        localStorage.setItem('notificationEnable', notificationEnable);
+        notificationAppearance();
+    });
+
 }
 
 function getAlerts() {
@@ -318,26 +338,20 @@ function getAlerts() {
             $(".alerts-listing").append(alertListHTML);
         }
 
-        setInterval(function(){
+        setInterval(function () {
             var randomPosition = Math.floor(Math.random() * 4);
-            console.log(randomPosition);
             $(".alerts-listing .alert").removeClass('highlighter');
-            $(".alerts-listing .alert:nth-child("+randomPosition+")").addClass('highlighter');
-        },1000);
+            $(".alerts-listing .alert:nth-child(" + randomPosition + ")").addClass('highlighter');
+        }, 1000);
 
-        
-        
     } else {
         alert('Create alert first');
     }
 }
 
-/*
-    setAlert();
-   */
 
-   getAlerts();
-   setAlert();
+getAlerts();
+setAlert();
 
 /* Just to experiments
 (() => {

@@ -38,14 +38,19 @@
                 <div class="set-alert-wrapper">
                     <div id="primary-content" class="primary-content">
                         <div class="set-alert-form">
-                            <h4 class="font-quicksand">Set Alerts</h4>
+                            <h4 class="font-quicksand">Set Alerts </h4>
+                            <div class="enable-container">
+                                    <input type="checkbox" value="false" class="show-notifications" id="switch" /><label for="switch">Toggle</label>
+                            </div>
                             <div class="input-area">
+                                <label>Something</label>
                                 <select class="set-control something1">
                                     <option value="20">20</option>
                                     <option value="30">30</option>
                                     <option value="40">40</option>
                                     <option value="50">50</option>
                                 </select>
+                                <label>of</label>
                                 <select class="set-control something2">
                                     <option value="1.0.2.5.">1.0.2.5.</option>
                                     <option value="1.2.8.5.">1.2.8.5.</option>
@@ -53,8 +58,10 @@
                                     <option value="1.5.8.5.">1.5.8.5.</option>
                                     <option value="1.6.8.5.">1.6.8.5.</option>
                                 </select>
+                                <label>by</label>
                                 <input type="text" class="set-control something3" required placeholder="Input something" />
-                                <div class="submit-button">Done</div>
+                                <div class="submit-button">Set</div>
+                                
                             </div>
                         </div>
                     </div>

@@ -480,6 +480,8 @@ input[type=text].input-text {
   font-size: 14px;
   text-align: center;
   color: #fff;
+  padding: 0;
+  margin: 8px;
 }
 
 .set-alert-form>h3 {
@@ -488,11 +490,16 @@ input[type=text].input-text {
 
 .set-alert-form>.input-area {
   width: 100%;
-  background: #50727c;
+  background: #fff;
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
+}
+
+.set-alert-form>.input-area label {
+  margin: 0;
 }
 
 .set-alert-form>.input-area>input[type=text],
@@ -585,7 +592,7 @@ input[type=text].input-text {
   font-size: 10px;
   max-height: 196px;
   overflow-y: scroll;
-  display: flex;
+  display: none;
   flex-direction: column-reverse;
 }
 
@@ -650,4 +657,45 @@ input[type=text].input-text {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.enable-container input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+.enable-container label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 44px;
+    height: 24px;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+.enable-container label:after {
+  content: "";
+  position: absolute;
+  top: 4px;
+    left: 5px;
+    width: 17px;
+    height: 17px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+.enable-container input:checked + label {
+  background: #bada55;
+}
+.enable-container input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+.enable-container label:active:after {
+  width: 130px;
+}
+
+.showing-feature {
+  display: flex;
 }
