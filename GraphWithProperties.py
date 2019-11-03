@@ -53,7 +53,6 @@ def timeGraph():
     if request.method == "POST":
         date = request.form["date"]
     
-    print(date)
     if os.path.exists('ui/json/graph-'+date+'.json'):
         return "Success", 200 
     

@@ -161,7 +161,9 @@ function createWindowYoutube() {
         width: 500,
         icon: "<span class='mif-youtube'></span>",
         title: "Youtube video",
-        content: `<svg width="500" height="500" id="mainSvg"></svg>
+        content: `<input type="text" placeholder="Search for Node" id="searchGraph"/>
+        <input type="submit" id="btnSearchGraph" value="Search"><br><br>
+        <svg width="500" height="500" id="mainSvg"></svg>
         `,
         clsContent: "bg-light"
     });
