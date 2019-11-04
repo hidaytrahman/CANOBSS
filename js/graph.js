@@ -16,24 +16,21 @@ function draw(cypher_set){
        arrows:true,
         labels: {
                     "A":{
-					"caption" : "IpAddress"
+					"caption" : "IpAddress",
+                    "size": "OutDegree",
+                    "community": "Cluster"
 				    },
-                    "Properties":{
-					"caption" : false
+                    "D":{
+                        "caption" : false
 				    }
 					
 					},
       relationships: {
-                    "Properties": {
-                        "thickness": "weight",
-                        "caption": false
-                        },
                     
                     "SendTo": {
                         "thickness": "weight",
                         "caption": true,
-                        "community": "Red",
-                        "color":"green"
+                        "community": "Red"
                     }
                     },
       relationship_thickness: {
@@ -63,7 +60,9 @@ function draw_live(cypher_set){
        arrows:true,
         labels: {
                     "A":{
-					"caption" : "IpAddress"
+					"caption" : "IpAddress",
+                    "size": "OutDegree",
+                    "community": "Cluster"
 				    },
                     "D":{
 					"caption" : false
@@ -99,12 +98,12 @@ function draw_range(timest){
        arrows:true,
         labels: {
                     "A":{
-					"caption" : "IpAddress"
+					"caption" : "IpAddress",
+                    "size": "OutDegree",
+                    "community": "Cluster"
 				    },
                     "D":{
-					"caption" : false,
-                    "community": "grey",
-                     "color":"grey"
+					"caption" : false
 				    }
 					
 					},
@@ -172,7 +171,9 @@ function draw_date1(date)
        arrows:true,
         labels: {
                     "A":{
-					"caption" : "IpAddress"
+					"caption" : "IpAddress",
+                    "size": "OutDegree",
+                    "community": "Cluster"
 				    },
                     "D":{
 					"caption" : false
@@ -210,7 +211,9 @@ function draw_date2(date)
        arrows:true,
         labels: {
                     "A":{
-					"caption" : "IpAddress"
+					"caption" : "IpAddress",
+                    "size": "OutDegree",
+                    "community": "Cluster"
 				    },
                     "D":{
 					"caption" : false

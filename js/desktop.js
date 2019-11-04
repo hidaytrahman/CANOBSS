@@ -185,7 +185,7 @@ function createWindowModal() {
     });
 }
 
-function createWindowYoutube() {
+function createLive() {
     Desktop.createWindow({
         resizeable: true,
         draggable: true,
@@ -221,7 +221,7 @@ function createSearchBar() {
     });
 }
 
-function createGraph() {
+function createCluster() {
     const fetchUsers = () => {
         axios.get('http://localhost:8081/ml-ai/data/data.json')
             .then(response => {
@@ -315,24 +315,45 @@ $(".charm-tile").on("click", function () {
     $(this).toggleClass("active");
 });
 
-
-$("#notification").on("click", function () {
-    setAlert();
-    getAlerts();
+var isNotificationOn = false;
+$("#new-alert").on("click", function () {
+    $('.set-alert-form').addClass('showIt');
 });
 
+$("#notification").on("click", function () {
+    isNotificationOn = !isNotificationOn;
+    console.log('isNotificationOn', isNotificationOn);
+    if (isNotificationOn) {
+        /*setAlert();
+        getAlerts();*/
+    }
 
+});
 
 var notificationExist = localStorage.getItem('notificationList');
+
+var notificationEnable = localStorage.getItem('notificationEnable');
+function notificationAppearance() {
+    // notification appearance handling
+    console.log('notificationEnable', notificationEnable);
+    if (notificationEnable) {
+        $('.alerts-listing').addClass('showing-feature');
+        $('.show-notifications').prop('checked', true);
+    } else {
+        $('.alerts-listing').removeClass('showing-feature');
+        $('.show-notifications').prop('checked', false);
+    }
+}
+notificationAppearance();
+
+
 function setAlert() {
-    var inputs = $(".set-alert .input-area");
+    var inputs = $(".set-alert-form .input-area");
     var notificationsList = [];
-    
-    if(notificationExist) {
+
+    if (notificationExist) {
         notificationsList = notificationExist;
-        console.log('type', typeof notificationsList);
         notificationsList = notificationsList.split(",");
-        console.log('type', typeof notificationsList);
     } else {
         notificationsList = [];
     }
@@ -341,31 +362,51 @@ function setAlert() {
         var something1 = inputs.find('.something1').val();
         var something2 = inputs.find('.something2').val();
         var something3 = inputs.find('.something3').val();
-
         if (something3 == '') {
             alert('Please enter value');
         } else {
             var notification = something1 + ' of a ' + something2 + ' by ' + something3;
             notificationsList.push(notification)
             localStorage.setItem('notificationList', notificationsList);
+            $('.set-alert-form').removeClass('showIt');
+            getAlerts();
         }
-
-        getAlerts();
     });
+
+    $(".show-notifications").on("click", function () {
+        notificationEnable = !notificationEnable;
+        localStorage.setItem('notificationEnable', notificationEnable);
+        notificationAppearance();
+    });
+
 }
 
 function getAlerts() {
-    
     if (notificationExist) {
         var notificationsList = notificationExist.split(',');
-        console.log('notificationsList', notificationsList);
+        $(".alerts-listing").html('');
         for (var i = 0; i < notificationsList.length; i++) {
-            $(".alerts-listing").append('<p>' + notificationsList[i] + '</p>');
+            const alertListHTML = document.createElement('div');
+            alertListHTML.className = 'alert';
+            const alert = document.createTextNode(notificationsList[i]);
+            alertListHTML.appendChild(alert);
+            $(".alerts-listing").append(alertListHTML);
         }
+
+        setInterval(function () {
+            var randomPosition = Math.floor(Math.random() * 4);
+            $(".alerts-listing .alert").removeClass('highlighter');
+            $(".alerts-listing .alert:nth-child(" + randomPosition + ")").addClass('highlighter');
+        }, 1000);
+
     } else {
-        alert('Create alert first');
+       // alert('Create alert first');
     }
 }
+
+
+getAlerts();
+setAlert();
 
 /* Just to experiments
 (() => {
