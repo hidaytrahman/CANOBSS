@@ -166,6 +166,18 @@ function createWindowYoutube() {
     });
 }
 
+function createLive() {
+    Desktop.createWindow({
+        resizeable: true,
+        draggable: true,
+        width: 500,
+        icon: "<span class='mif-florist'></span>",
+        title: "Live",
+        content: "https://youtu.be/ZlhUJ6QkvL8",
+        clsContent: "bg-dark"
+    });
+}
+
 function createSearchBar() {
     Desktop.createWindow({
         resizeable: true,
@@ -222,6 +234,52 @@ function createGraph() {
             <tbody id="tdata">
             </tbody>
         </table>
+        `,
+        clsContent: "bg-light"
+    });
+}
+
+function createCluster() {
+    const fetchUsers = () => {
+        axios.get('http://localhost:4242/ml-ai/data/data.json')
+            .then(response => {
+                const users = response.data;
+                console.log(`GET list data`, users);
+                console.log(`GET list data`, users.length);
+                for (let i = 0; i < users.length; i++) {
+                    console.log(users[i]);
+                    let _user = users[i];
+                    document.querySelector('#results-data #tdata').innerHTML += '<tr><td>' + _user.IP_ADDRESS + '</td></tr>';
+                }
+
+            })
+            .catch(error => console.error(error));
+    };
+
+    fetchUsers();
+
+    Desktop.createWindow({
+        resizeable: false,
+        draggable: false,
+        width: '90vw',
+        icon: "<span class='mif-cloud'></span>",
+        title: "Clustering",
+        content: `
+        <section class="clustering">
+        <h2>Clustering</h2> <hr>
+        <table id="results-data">
+            <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            </thead>
+            <tbody id="tdata">
+            </tbody>
+        </table>
+        </section>
+        
         `,
         clsContent: "bg-light"
     });
