@@ -51,7 +51,7 @@ function draw_live(cypher_set){
        if (cypher_set!="1")
        cypher = cypher_set
        else
-       var cypher = "MATCH p = ()-[t:time]->(d)-[r:SendTo]->()  RETURN p";
+       var cypher = "MATCH p = ()-[t:time]->(d)-[r:SendTo]->() WHERE d.Date =~ '20-11-2019.*' OR d.Date =~ '19-11-2019.*' OR d.Date =~ '18-11-2019.*' RETURN p";
        var config = {
        container_id: "vid",
        server_url:"bolt://10.164.27.117:7687",

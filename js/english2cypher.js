@@ -7,7 +7,7 @@ function englishParser(searchTextBoxId, codeMirrorEditor){
 	var result = parser.results[0][0][0][0];
 if(result.statementNo==1){
 		code += 'MATCH (n)\n\
-RETURN n LIMIT '+result.english2cypher1number[0].join("")+'\n\
+WHERE n.Cluster=0 RETURN n Order by  n.OutDegree DESC LIMIT '+result.english2cypher1number[0].join("")+'\n\
 ';
 }
 

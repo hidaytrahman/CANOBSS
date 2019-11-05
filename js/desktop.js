@@ -212,13 +212,42 @@ function createSearchBar() {
         content: `
         <section class="search-area">
         <div class="search-wrapper">
-            <input type="text" class="input-text" placeholder="Search or speak">
+            <input type="text" id="cypherBox" onkeypress="doSomething(this, event)" onclick="this.select()" " class="input-text" placeholder="Search or speak">
             <a href="#" class="btn btn-voice"><span class="mif-settings-voice"></span></a>
+           
         </div>
     </section>
     <!-- Search are end here -->`,
         clsContent: "bg-dark"
     });
+    
+    var codeMirrorEditor = CodeMirror.fromTextArea(document.getElementById("cypherBox"), {
+                        mode:'cypher',
+                        lineNumbers: false,
+                        lineWrapping: false,
+                        scrollbarStyle: "native",
+                        theme: 'neo'
+                    });
+                      var code = 
+                    ``;
+                    if(document.getElementById("insert") != null){
+                    document.getElementById("insert").innerHTML = codeMirrorEditor.getValue(code);
+                    } 
+}
+
+function doSomething(element, e) {
+    var charCode;
+
+    if(e && e.which){
+        charCode = e.which;
+    }else if(window.event){
+        e = window.event;
+        charCode = e.keyCode;
+    }
+
+    if(charCode == 13) {
+       myFunction();
+    }
 }
 
 function createCluster() {
