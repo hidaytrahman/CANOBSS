@@ -104,11 +104,19 @@ def timeGraph():
         
     count = 0
     node_cluster = {}
+    
     for node in networkGraph.nodes:
         node_cluster[node] = int(data_labels[count])
         count+=1
+        
     
     nx.set_node_attributes(networkGraph, node_cluster, 'cluster')
+    nx.set_node_attributes(networkGraph, dict(networkGraph.in_degree), 'in_degree')
+    nx.set_node_attributes(networkGraph, dict(networkGraph.out_degree), 'out_degree')
+    nx.set_node_attributes(networkGraph, closeness_centrality, 'closeness_c')
+    nx.set_node_attributes(networkGraph, degree_centrality, 'degree_c')
+    nx.set_node_attributes(networkGraph, betweenness_centrality, 'betweeness_c')
+    nx.set_node_attributes(networkGraph, eigenvector_centrality, 'eigen_c')
     
     graphData['Cluster'] = data_labels
 
@@ -117,7 +125,8 @@ def timeGraph():
         json.dump(timeGraphJSON, f, ensure_ascii=False)
         
     return "Success", 200 
-print('\nGo to http://localhost:8000 to see the example\n')
+
+print('\nGo to http://localhost:8000 to see the server\n')
 app.run(port=8000)
 
 

@@ -33,6 +33,23 @@
   border-radius: 9px;
 }
 
+@-webkit-keyframes pulse 
+{       
+  0% {-webkit-transform: scale(1.0); opacity: 1;}
+  100% {-webkit-transform: scale(2); opacity: 0;}
+}
+
+.hidden-div
+{
+  display: none;
+}
+
+.pulse
+    {
+      /* Giving Animation Function */
+      -webkit-animation: pulse 2s linear infinite;
+    }
+
 circle {
   stroke-width: 1.5px;
 }
