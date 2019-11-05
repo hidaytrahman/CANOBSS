@@ -105,80 +105,9 @@ function draw(date, id) {
                     .style("top", (d3.event.pageY + 10) + "px");
             })
             .on("click", function(){
-                var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 460 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-                var nodeData = this.childNodes[0].__data__;
-                $('#hiddenDiv').show();
-            
-                var attributes_name = ['InDegree', 'OutDegree', 'ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
-                var attributes_values = [nodeData.in_degree, nodeData.out_degree, nodeData.closeness_c*10, nodeData.degree_c*10, nodeData.betweeness_c*10, nodeData.eigen_c*10];
-                var attributes_array = [];
-                attributes_name.forEach(function(k,i){
-                    var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-                    attributes_array.push(temp_dict);
-                })
-
-                var attributes_json = JSON.stringify(attributes_array);
-
-                var x = d3.scaleBand()
-                .rangeRound([0, width], .1);
-                
-                var y = d3.scaleLinear()
-                    .range([height, 0]);
-
-                var xAxis = d3.axisBottom(x);
-
-                var yAxis = d3.axisLeft(y).ticks(10, "");
-                
-                var tip = d3.tip()
-                    .attr('class', 'd3-tip')
-                    .offset([-10, 0])
-                    .html(function(d) {
-                        if(d.name === "InDegree" || d.name === "OutDegree"){
-                            return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
-                        }else{
-                            return "<strong>Value(x10):</strong> <span style='color:red'>" + d.value + "</span>";
-                        }
-                })
-                
-                var svg = d3.select("#hiddenDiv").append("svg")
-                .attr("width", 500)
-                .attr("height", 500)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-                svg.call(tip);
-
-                x.domain(attributes_array.map(function(d) { return d.name; }));
-                y.domain([0, 15]);
-
-                svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-                svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", -36)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Value");
-
-                svg.selectAll(".bar")
-                .data(attributes_array)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function(d) { return x(d.name); })
-                .attr("width", x.bandwidth())
-                .attr("y", function(d) { return y(d.value); })
-                .attr("height", function(d) { return height - y(d.value); })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);
-              
+                $('#hiddenDiv').html("");
+                barGraphDegree(this);
+                barGraphCentrality(this);
                 // d3.select(this).attr('r', 4)
                 //     .style("fill","#000000")
                 //     .style("stroke","#000000");
@@ -366,6 +295,149 @@ function draw(date, id) {
               return false;
             }
           });
+    }
+
+
+    function barGraphDegree(ref){
+        var margin = {top: 40, right: 20, bottom: 30, left: 70},
+                    width = 260 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+        var nodeData = ref.childNodes[0].__data__;
+        $('#hiddenDiv').show();
+    
+        var attributes_name = ['InDegree', 'OutDegree'];
+        var attributes_values = [nodeData.in_degree, nodeData.out_degree];
+        var attributes_array = [];
+        attributes_name.forEach(function(k,i){
+            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
+            attributes_array.push(temp_dict);
+        })
+
+        var attributes_json = JSON.stringify(attributes_array);
+
+        var x = d3.scaleBand()
+        .rangeRound([0, width], .1);
+        
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+
+        var xAxis = d3.axisBottom(x);
+
+        var yAxis = d3.axisLeft(y).ticks(10, "");
+        
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {             
+                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
+        })
+        
+        var svg = d3.select("#hiddenDiv").append("svg")
+        .attr("width", 300)
+        .attr("height", 500)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
+
+        x.domain(attributes_array.map(function(d) { return d.name; }));
+        y.domain([0, 25]);
+
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+        svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -36)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Value");
+
+        svg.selectAll(".bar")
+        .data(attributes_array)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.name); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
+    }
+
+    function barGraphCentrality(ref){
+        var margin = {top: 40, right: 20, bottom: 30, left: 70},
+                    width = 460 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+        var nodeData = ref.childNodes[0].__data__;
+        $('#hiddenDiv').show();
+    
+        var attributes_name = ['ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
+        var attributes_values = [nodeData.closeness_c, nodeData.degree_c, nodeData.betweeness_c, nodeData.eigen_c];
+        var attributes_array = [];
+        attributes_name.forEach(function(k,i){
+            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
+            attributes_array.push(temp_dict);
+        })
+
+        var x = d3.scaleBand()
+        .rangeRound([0, width], .1);
+        
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+
+        var xAxis = d3.axisBottom(x);
+
+        var yAxis = d3.axisLeft(y).ticks(10, "");
+        
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
+        })
+        
+        var svg = d3.select("#hiddenDiv").append("svg")
+        .attr("width", 500)
+        .attr("height", 500)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
+
+        x.domain(attributes_array.map(function(d) { return d.name; }));
+        y.domain([0, 0.1]);
+
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+        svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -36)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Value");
+
+        svg.selectAll(".bar")
+        .data(attributes_array)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.name); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
     }
 }
 
