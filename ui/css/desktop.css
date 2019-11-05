@@ -44,6 +44,11 @@
   display: none;
 }
 
+table, th, td
+{
+  border: 2px solid black;
+}
+
 .pulse
     {
       /* Giving Animation Function */

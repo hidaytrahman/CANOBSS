@@ -442,6 +442,7 @@ function draw(date, id) {
 }
 
 
+var attributeDiffs;
 
 function createJSONTimeGraph() {
     var date1 = document.getElementById("graphDate1").value;
@@ -483,7 +484,84 @@ function createJSONTimeGraph() {
             alert(resultData.responseText + ":" + finalDate2);
         }
     });
+
+    getTop5Diff(finalDate1, finalDate2);
 }
+
+function createTimeGraphs(){
+    var dateValues = getDateValues();
+    $('#attSelect').on('change', function() {
+        setTableData();
+    });
+
+    document.getElementById('graphDate1').value = dateValues[3]
+    document.getElementById('graphDate2').value = dateValues[1]
+
+    draw(dateValues[2], "timeSvg1");
+    draw(dateValues[0], "timeSvg2");
+
+    getTop5Diff(dateValues[2], dateValues[0]);
+  
+}
+
+function getTop5Diff(date1, date2){
+    var data = { "date1": date1, "date2":date2, "count":5 };
+    $.ajax({
+        type: 'POST',
+        method: 'POST',
+        url: '/top5',
+        data: data,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: function (resultData) {
+            attributeDiffs = resultData;  
+            setTableData(); 
+        },
+        error: function (resultData) {
+            alert(resultData);
+        }
+    });
+}
+
+
+function setTableData(){
+    var attr = $('#attSelect').children("option:selected").val();
+    if(attr === "inDegreeDiff"){var tableData = attributeDiffs.InDegreeDiff;}
+    else if(attr === "outDegreeDiff"){var tableData = attributeDiffs.OutDegreeDiff;}
+    else if(attr === "closenessCDiff"){var tableData = attributeDiffs.ClosenessCDiff;}
+    else if(attr === "degreeCDiff"){var tableData = attributeDiffs.DegreeCDiff;}
+    else if(attr === "betweennessCDiff"){var tableData = attributeDiffs.BetweennessCDiff;}
+    else if(attr === "eigenCDiff"){var tableData = attributeDiffs.EigenVectorCDiff;}
+    $('#attributeDiffTbl tbody').empty();
+    var table = document.getElementById("attributeDiffTbl").getElementsByTagName('tbody')[0];
+    tableData.forEach(function(item, index){          
+        var row = table.insertRow(index);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = item[0];
+        cell2.innerHTML = item[1];            
+    });
+}
+
+function getDateValues(){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    var currentDateToSearch = dd+"-"+mm+"-"+yyyy;
+    var currentDateToShow = yyyy+"-"+mm+"-"+dd;
+
+    var yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    dd = String(yesterday.getDate()).padStart(2, '0');
+    mm = String(yesterday.getMonth() + 1).padStart(2, '0'); //January is 0!
+    yyyy = yesterday.getFullYear();
+
+    var yesterdayDateToSearch = dd+"-"+mm+"-"+yyyy;
+    var yesterdayDateToShow = yyyy+"-"+mm+"-"+dd;
+    return [currentDateToSearch, currentDateToShow, yesterdayDateToSearch, yesterdayDateToShow];
+}
+
 
 function responsivefy(svg) {
     // get container + svg aspect ratio
