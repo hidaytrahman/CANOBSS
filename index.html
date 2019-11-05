@@ -21,10 +21,10 @@
             
             #vid {
                 width: 100%;
-                height: 1200px;
+                height: 720px;
                 border: 1px solid darkgray;
                 font: 22pt arial;
-                display: inline-block;
+                display: block;
             }
             
             #vim {
@@ -120,7 +120,7 @@
     </style>
 </head>
 
-<body class="m4-cloak">
+<body class="m4-cloak"  onload="draw_live(1)">
     <div data-role="charms" data-position="right" id="charm" class="p-4">
         <div class="h-100 d-flex flex-column">
             <div class="alert-wrapper">
@@ -242,12 +242,16 @@
     </div>
 
     <div class="desktop">
+       
         <div class="window-area">
+          <div id="vid" width="2000" height="700"></div>
+         
             <section class="search-area">
                 <div class="search-wrapper">
                     <input type="text" class="input-text" id="write-command" placeholder="Search or speak">
                     <a href="#" id="speak-out" class="btn btn-voice"><span class="mif-settings-voice"></span></a>
                 </div>
+                
             </section>
             <!-- Search are end here -->
 
