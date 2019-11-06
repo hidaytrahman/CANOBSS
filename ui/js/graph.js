@@ -1,16 +1,16 @@
 function draw(date, id) {
     
     var width = 800;
-        height = 800;
+        height = 400;
         radius = 10;
     var graph, store, graphBack;
     var simulation = d3.forceSimulation()
         .velocityDecay(0.1)
         .force("x", d3.forceX(width / 2).strength(.1))
         .force("y", d3.forceY(height / 2).strength(.1))
-        .force("charge", d3.forceManyBody().strength(-60))
-        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(50).strength(1))
-        .force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
+        .force("charge", d3.forceManyBody().strength(-40))
+        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(50).strength(1));
+        //.force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
 
     var nodes_list = [];
     var svg = d3.select("#" + id)
@@ -120,8 +120,12 @@ function draw(date, id) {
                 if(blockedNodes.includes(d.id)){
                     return "#000000";
                 }
-				
                 return  node_color(d.cluster); })
+            .style("stroke", function(d) { 
+                if(d.cluster != 0){
+                    return "#000000";
+                } 
+            })
            // .style("stroke", function(d) { return "#000000" })
             .on('mouseover.fade', fade(0.1))
             .on('mouseout.fade', fade(1))
@@ -620,38 +624,50 @@ function createJSONTimeGraph() {
 
     var data_json_date1 = { "date": finalDate1 };
     var data_json_date2 = { "date": finalDate2 };
-    $.ajax({
-        type: 'POST',
-        method: 'POST',
-        url: '/timeGraph',
-        data: data_json_date1,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        success: function (resultData) {
-            var svg1 = d3.select("#timeSvg1");
-            svg1.selectAll("*").remove();
-            draw(finalDate1, 'timeSvg1');
-            console.log(resultData);
-        },
-        error: function (resultData) {
-            alert(resultData);
-        }
-    });
-    $.ajax({
-        type: 'POST',
-        method: 'POST',
-        url: '/timeGraph',
-        data: data_json_date2,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        success: function (resultData) {
-            var svg2 = d3.select("#timeSvg2");
-            svg2.selectAll("*").remove();
-            draw(finalDate2, 'timeSvg2');
-            console.log(resultData);
-        },
-        error: function (resultData) {
-            alert(resultData.responseText + ":" + finalDate2);
-        }
-    });
+
+    var file1Exists = false;
+    var file2Exists = false;
+    var filePath1 = '/json/graph-'+finalDate1+'.json';
+    var filePath2 = '/json/graph-'+finalDate2+'.json';
+    file1Exists = checkFileExists(filePath1);
+    file2Exists = checkFileExists(filePath2);
+
+    if(!file1Exists){
+        $.ajax({
+            type: 'POST',
+            method: 'POST',
+            url: '/timeGraph',
+            data: data_json_date1,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (resultData) {
+                var svg1 = d3.select("#timeSvg1");
+                svg1.selectAll("*").remove();
+                draw(finalDate1, 'timeSvg1');
+                console.log(resultData);
+            },
+            error: function (resultData) {
+                alert(resultData);
+            }
+        });
+    }
+    if(!file2Exists){
+        $.ajax({
+            type: 'POST',
+            method: 'POST',
+            url: '/timeGraph',
+            data: data_json_date2,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (resultData) {
+                var svg2 = d3.select("#timeSvg2");
+                svg2.selectAll("*").remove();
+                draw(finalDate2, 'timeSvg2');
+                console.log(resultData);
+            },
+            error: function (resultData) {
+                alert(resultData.responseText + ":" + finalDate2);
+            }
+        });
+    }
 
     getTop5Diff(finalDate1, finalDate2);
 }
@@ -664,7 +680,7 @@ function createTimeGraphs(){
 
     document.getElementById('graphDate1').value = dateValues[3]
     document.getElementById('graphDate2').value = dateValues[1]
-
+    createJSONTimeGraph();
     draw(dateValues[2], "timeSvg1");
     draw(dateValues[0], "timeSvg2");
 
@@ -782,4 +798,17 @@ function popupClose2()
 	ele.style.opacity=0;
 	var ele1 = document.getElementById("markov")
 	ele1.innerHTML="";
+}
+
+function checkFileExists(filePath){
+    $.ajax({
+        type: 'HEAD',
+        url: filePath,
+        success: function(msg){
+          return true;
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            return false;
+        }
+      });
 }

@@ -69,6 +69,37 @@ function createClusters() {
 
 }
 
+function createGraphDiff() {
+    const title = `<h2>Diff 2 Dates</h2>`;
+    const htmlContent = `<input type="date" id="graphDate1">
+    <input type="date" id="graphDate2">
+    <input type="submit" onclick="createJSONTimeGraph()"><br><br>
+    <svg width="400" height="400" id="timeSvg1" class="timeSvg"></svg>
+    <svg width="400" height="400" id="timeSvg2" class="timeSvg"></svg>
+    <div>
+    <select name="selector" id="attSelect">
+    <option value="inDegreeDiff" selected="selected">In Degree</option>
+    <option value="outDegreeDiff">Out Degree</option>
+    <option value="closenessCDiff">Closeness Centrality</option>
+    <option value="betweennessCDiff">Betweenness Centrality</option>
+    <option value="degreeCDiff">Degree Centrality</option>
+    <option value="eigenCDiff">Eigen Vector Centrality</option>
+    </select>
+    <table id="attributeDiffTbl">
+    <thead>
+    <tr>
+    <th>Node</th>
+    <th>Difference</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+    </table>
+    </div>
+    `;
+    hrCustomPopup(title,htmlContent);
+    createTimeGraphs();
+}
+
 /*
 function createCluster() {
     $('.hr-custom-popup').addClass('isVisible');
