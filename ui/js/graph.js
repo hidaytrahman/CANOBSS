@@ -1,32 +1,56 @@
 function draw(date, id) {
     
     var width = 800;
-        height = 700;
-        radius = 4;
+        height = 800;
+        radius = 10;
     var graph, store, graphBack;
     var simulation = d3.forceSimulation()
         .velocityDecay(0.1)
         .force("x", d3.forceX(width / 2).strength(.1))
         .force("y", d3.forceY(height / 2).strength(.1))
-        .force("charge", d3.forceManyBody().strength(-50))
+        .force("charge", d3.forceManyBody().strength(-60))
         .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(50).strength(1))
-        .force('collision', d3.forceCollide().strength(1).radius(function (d) { return radius + .75 }));
+        .force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
 
     var nodes_list = [];
-    var svg = d3.select("#" + id);
+    var svg = d3.select("#" + id)
+        .attr("width", width)
+        .attr("height", height);
         //.call(responsivefy);
-
+	var defs = svg.append("svg:defs")
+	defs.append("pattern")
+	.attr("id", function(d) { return "pc"; })
+	.attr("width", radius*2)
+	.attr("height", radius*2)
+	.attr("class", "pattern")
+	.append("image")
+		.attr("xlink:href", function(d) { return "images/pc.png"; })
+		.attr("width", radius*2)
+		.attr("height", radius*2)
+		.attr("x", 0)
+		.attr("y", 0);
+	defs.append("pattern")
+	.attr("id", function(d) { return "bug"; })
+	.attr("width", radius*2)
+	.attr("height", radius*2)
+	.attr("class", "pattern")
+	.append("image")
+		.attr("xlink:href", function(d) { return "images/bug.png"; })
+		.attr("width", radius*3)
+		.attr("height", radius*3)
+		.attr("x", 0)
+		.attr("y", 0);
 
     var link = svg.append("g").selectAll(".link"),
         node = svg.append("g").selectAll(".node");
 
     var node_radius = d3.scaleOrdinal()
         .domain([0, 1, 2, 3])
-        .range([14, 9, 7, 5]);
+        .range([20, 18, 18, 18]);
 
     var node_color = d3.scaleOrdinal()
         .domain([0, 1, 2, 3, 999])
-        .range(["#DC143C", "#F0E68C", "#00FFFF", "#7FFF00", "#000000"]);
+        .range(["url(#bug)", "url(#pc)", "url(#pc)", "url(#pc)", "url(#pc)"]);
 
     var edge_length = d3.scaleOrdinal()
         .domain([0, 1, 2, 3])
@@ -82,7 +106,9 @@ function draw(date, id) {
         node = node.data(graph.nodes, function (d) { return d.id; });
 
         node.exit().remove();
-
+		
+		
+		
         var newNode = node.enter().append("circle")
             .attr("class", "node")
             .attr("r", function (d) { 
@@ -94,18 +120,30 @@ function draw(date, id) {
                 if(blockedNodes.includes(d.id)){
                     return "#000000";
                 }
-                return node_color(d.cluster); })
-            .style("stroke", function(d) { return "#000000" })
+				
+                return  node_color(d.cluster); })
+           // .style("stroke", function(d) { return "#000000" })
             .on('mouseover.fade', fade(0.1))
             .on('mouseout.fade', fade(1))
             .on("mousemove", function () {
                 tooltip.style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY + 10) + "px");
             })
-            .on("click", function(){
-                $('#hiddenDiv').html("");
-                barGraphDegree(this);
-                barGraphCentrality(this);
+            .on("click", function(d){
+                $('#bar').html("");
+				
+				var ele = document.getElementById("popup1")
+				ele.style.visibility="visible";
+				ele.style.opacity=1;
+				if(d.cluster==0)
+				{
+					anGraphDegree(this);
+				}
+				else
+				{
+					barGraphDegree(this);
+					barGraphCentrality(this);
+				}
                 // d3.select(this).attr('r', 4)
                 //     .style("fill","#000000")
                 //     .style("stroke","#000000");
@@ -295,13 +333,145 @@ function draw(date, id) {
           });
     }
 
+	function anGraphDegree(ref)
+	{
+		 var data = [95]
 
+    var width = 500,
+        barHeight = 20,
+        margin = 1;
+
+    var scale = d3.scaleLinear()
+                 .domain([d3.min(data), d3.max(data)])
+                 .range([50, 500]);
+	
+    var svg1 = d3.select("#bar");
+	svg1.append("h3")
+		.text("Current Flow Difference")
+    var svg=svg1.append("svg")
+                  .attr("width", width)
+                  .attr("height", barHeight * data.length);
+
+    var g = svg.selectAll("g")
+                  .data(data)
+                  .enter()
+                  .append("g")
+                  .attr("transform", function (d, i) {
+                      return "translate(0," + i * barHeight + ")";
+                  });
+
+    g.append("rect")
+       .attr("width", function (d) {
+           return scale(d);
+       })
+       .attr("height", barHeight - margin)
+
+    g.append("text")
+       .attr("x", function (d) { return (scale(d)); })
+       .attr("y", barHeight / 2)
+       .attr("dy", ".35em")
+       .text(function (d) { return d; });
+	   
+	 barGraphDegree1(ref);
+	
+		
+	}
+	
+	function barGraphDegree1(ref){
+        var margin = {top: 40, right: 20, bottom: 30, left: 70},
+                    width = 700 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+// set the ranges
+
+        var nodeData = ref.childNodes[0].__data__;
+      //  $('#popup1').show();
+    
+        var attributes_name = ['InDegree', 'OutDegree','ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
+        var attributes_values = [.33,.22,.44,.33,.55,.32];
+        var attributes_array = [];
+        attributes_name.forEach(function(k,i){
+            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
+            attributes_array.push(temp_dict);
+        })
+
+        var attributes_json = JSON.stringify(attributes_array);
+
+        var x = d3.scaleBand()
+        .rangeRound([0, width], .1);
+        
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+
+        var xAxis = d3.axisBottom(x);
+
+        var yAxis = d3.axisLeft(y).ticks(10, "");
+        
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {             
+                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
+        })
+        
+        var svg1 = d3.select("#bar")
+		svg1.append("div");
+		var svg=svg1.append("svg")
+        .attr("width", 700)
+        .attr("height", 500)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.call(tip);
+
+        x.domain(attributes_array.map(function(d) { return d.name; }));
+        y.domain([0, 1]);
+
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+        svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -36)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Value");
+
+        svg.selectAll(".bar")
+        .data(attributes_array)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.name); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
+		markovButton()
+    }
+	function markovButton()
+	{
+		var ele = document.getElementById("bar");
+		var div = document.createElement("div");
+		var button = document.createElement("input");
+    button.type = "button";
+    button.value = "Markov Chain";
+    button.onclick = markov;
+    div.appendChild(button);
+	ele.appendChild(div);
+		
+	}
     function barGraphDegree(ref){
         var margin = {top: 40, right: 20, bottom: 30, left: 70},
                     width = 260 - margin.left - margin.right,
                     height = 500 - margin.top - margin.bottom;
         var nodeData = ref.childNodes[0].__data__;
-        $('#hiddenDiv').show();
+      //  $('#popup1').show();
     
         var attributes_name = ['InDegree', 'OutDegree'];
         var attributes_values = [nodeData.in_degree, nodeData.out_degree];
@@ -330,7 +500,7 @@ function draw(date, id) {
                 return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
         })
         
-        var svg = d3.select("#hiddenDiv").append("svg")
+        var svg = d3.select("#bar").append("svg")
         .attr("width", 300)
         .attr("height", 500)
         .append("g")
@@ -373,7 +543,7 @@ function draw(date, id) {
                     width = 460 - margin.left - margin.right,
                     height = 500 - margin.top - margin.bottom;
         var nodeData = ref.childNodes[0].__data__;
-        $('#hiddenDiv').show();
+      //  $('#popup1').show();
     
         var attributes_name = ['ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
         var attributes_values = [nodeData.closeness_c, nodeData.degree_c, nodeData.betweeness_c, nodeData.eigen_c];
@@ -400,7 +570,7 @@ function draw(date, id) {
                 return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
         })
         
-        var svg = d3.select("#hiddenDiv").append("svg")
+        var svg = d3.select("#bar").append("svg")
         .attr("width", 500)
         .attr("height", 500)
         .append("g")
@@ -587,4 +757,29 @@ function responsivefy(svg) {
         svg.attr("height", Math.round(targetWidth / aspect));
     }
 }
-
+function popupClose()
+{
+	var ele = document.getElementById("popup1")
+	ele.style.visibility="";
+	ele.style.opacity=0;
+	var ele1 = document.getElementById("bar")
+	ele1.innerHTML="";
+}
+function markov()
+{
+	var ele = document.getElementById("popup2")
+	ele.style.visibility="visible";
+	ele.style.opacity=1;
+	 var img = document.createElement('img'); 
+            img.src = 'images/markov.png'; 
+ document.getElementById('markov').appendChild(img); 
+	
+}
+function popupClose2()
+{
+	var ele = document.getElementById("popup2")
+	ele.style.visibility="";
+	ele.style.opacity=0;
+	var ele1 = document.getElementById("markov")
+	ele1.innerHTML="";
+}

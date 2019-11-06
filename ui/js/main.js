@@ -15,11 +15,31 @@ function hrCustomPopup(title, htmlContent) {
 
 // open your function to show html
 function createSomething() {
-    const title = `<h2>This is title</h2>`;
-    const htmlContent = `
-    <h2>Hey this flag map</h2>
-    `;
+    const title = `<h2>Live View</h2>`;
+    const htmlContent = `<input type="text" placeholder="Search for Node" id="searchGraph"/>
+        <input type="submit" id="btnSearchGraph" value="Search"><br><br>
+        <svg width="500" height="500" id="mainSvg"></svg>
+        <div id="popup1" class="overlay">
+	<div class="popup">
+		<h2 id="popuph2">Node Details</h2>
+		<a class="close" href = javascript:void(0) onclick="popupClose()">&times;</a>
+		<div id="bar"class="content">
+			
+		</div>
+	</div>
+</div>
+<div id="popup2" class="overlay">
+	<div class="popup">
+		<h2>Markov Chain</h2>
+		<a class="close" href = javascript:void(0) onclick="popupClose2()">&times;</a>
+		<div id="markov" class="content">
+			
+		</div>
+	</div>
+</div>
+        `;
     hrCustomPopup(title,htmlContent);
+	draw(getDateValues()[0], "mainSvg");
 }
 
 
@@ -30,6 +50,7 @@ function createClusters() {
     <h2>Hey this is cluster</h2>
     `;
     hrCustomPopup(title,htmlContent);
+	
 }
 
 /*
