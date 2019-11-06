@@ -17,16 +17,15 @@ $(document).ready(function () {
                 },
                 'show top five anomalous nodes': function () {
                     alert('Its anomalous nodes');
+                },
+                'stop listening': function () {
+                    annyang.abort();
+                    $('.btn-voice').removeClass('listner-activated');
                 }
             };
 
             // Add our commands to annyang
             annyang.addCommands(commands);
-
-            setInterval(function () {
-                console.log('isListening()', annyang.isListening());
-            }, 1000)
-
 
 
             // Start listening. You can call this here, or attach this call to an event, button, etc.
