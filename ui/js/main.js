@@ -15,6 +15,16 @@ function hrCustomPopup(title, htmlContent) {
 
 // open your function to show html
 function createSomething() {
+    const title = `<h2>Your title here </h2>`;
+    const htmlContent = `
+    <section class="example-preview-wrapper">
+    
+    </section>
+        `;
+    hrCustomPopup(title, htmlContent);
+}
+
+function createLiveView() {
     const title = `<h2>Live View</h2>`;
     const htmlContent = `
     <section class="live-preview-wrapper">
