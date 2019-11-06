@@ -40,7 +40,8 @@
                         <div class="set-alert-form">
                             <h4 class="font-quicksand">Set Alerts </h4>
                             <div class="enable-container">
-                                    <input type="checkbox" value="false" class="show-notifications" id="switch" /><label for="switch">Toggle</label>
+                                <input type="checkbox" value="false" class="show-notifications" id="switch" /><label
+                                    for="switch">Toggle</label>
                             </div>
                             <div class="input-area">
                                 <label>Something</label>
@@ -59,9 +60,10 @@
                                     <option value="1.6.8.5.">1.6.8.5.</option>
                                 </select>
                                 <label>by</label>
-                                <input type="text" class="set-control something3" required placeholder="Input something" />
+                                <input type="text" class="set-control something3" required
+                                    placeholder="Input something" />
                                 <div class="submit-button">Set</div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -145,6 +147,25 @@
         </div>
     </div>
 
+    <div class="hr-custom-popup popup-wrapper" id="custom-popup">
+        <div class="content-wrapper">
+            <div class="close-button">
+                <span class="mif-cross"></span>
+            </div>
+            <header class="popup-header">
+                <h2>This is title</h2>
+            </header>
+            <section class="popup-content-section">
+
+            </section>
+            <!-- Here data will render specificlly -->
+            <footer class="popup-footer">
+                <p>Not required</p>
+            </footer>
+        </div>
+    </div>
+    <!-- popup wrapper end here -->
+
     <div class="desktop">
         <div class="window-area">
             <section class="search-area">
@@ -155,11 +176,46 @@
             </section>
             <!-- Search are end here -->
 
+            <div class="tiles-wrapper">
+                <div class="tiles-grid tiles-group size-3 fg-white" data-group-title="General">
+                    <a href="#" onclick="createSomething()" data-role="tile" class="bg-indigo fg-white">
+                        <span class="mif-florist icon"></span>
+                        <span class="branding-bar">Live</span>
+                    </a>
+                    <div data-role="tile" onclick="createClusters()" class="bg-cyan fg-white">
+                        <span class="mif-cloud icon"></span>
+                        <span class="branding-bar">Clustering</span>
+
+                    </div>
+                    <div data-role="tile" class="bg-orange fg-white">
+                        <span class="mif-firefox icon"></span>
+                        <span class="branding-bar">Node Info</span>
+
+                    </div>
+
+                    <div data-role="tile" class="bg-orange fg-white">
+                        <span class="mif-chart-bars2 icon"></span>
+                        <span class="branding-bar">Animated Sequence</span>
+
+                    </div>
+
+                    <a href="#" data-role="tile" class="bg-indigo fg-white">
+                        <span class="mif-done_all icon"></span>
+                        <span class="branding-bar">Diff. between 2 Dates</span>
+                    </a>
+                    <div data-role="tile" class="bg-cyan fg-white">
+                        <span class="mif-florist icon"></span>
+                        <span class="branding-bar">Preferences</span>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="task-bar">
             <div class="task-bar-section">
                 <button class="task-bar-item" id="start-menu-toggle"><span class="mif-windows"></span></button>
-                <div class="start-menu" data-role="dropdown" data-toggle-element="#start-menu-toggle">
+                <div class="start-menu force-hide" data-role="dropdown" data-toggle-element="#start-menu-toggle">
                     <div class="start-menu-inner h-100">
                         <div class="explorer">
                             <ul class="v-menu w-100 bg-brandColor2 fg-white hr-custom-menu">
@@ -203,6 +259,8 @@
     <!-- MAIN THEME -->
     <script src="js/vendor/metro.js"></script>
     <script src="js/desktop.js"></script>
+
+    <script src="js/main.js"></script>
 
     <!-- AJAX Stuff-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
