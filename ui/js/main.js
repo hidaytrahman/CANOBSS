@@ -2,22 +2,27 @@
 function hrCustomPopup(title, htmlContent) {
     const popupClass = '.hr-custom-popup';
     $(popupClass).addClass('isVisible');
-    $(popupClass+' .popup-header').html(title);
+    $(popupClass + ' .popup-header').html(title);
 
     // close button
-    $(popupClass+' .close-button').on("click", function () {
+    $(popupClass + ' .close-button').on("click", function () {
         $(popupClass).removeClass('isVisible');
     })
     title
     // your dom will render here
-    $(popupClass+' .content-wrapper .popup-content-section').html(htmlContent);
+    $(popupClass + ' .content-wrapper .popup-content-section').html(htmlContent);
 }
 
 // open your function to show html
 function createSomething() {
     const title = `<h2>Live View</h2>`;
-    const htmlContent = `<input type="text" placeholder="Search for Node" id="searchGraph"/>
+    const htmlContent = `
+    <section class="live-preview-wrapper">
+    <aside class="controls">
+        <input type="text" placeholder="Search for Node" id="searchGraph"/>
         <input type="submit" id="btnSearchGraph" value="Search"><br><br>
+    </aside>
+    
         <svg width="500" height="500" id="mainSvg"></svg>
         <div id="popup1" class="overlay">
 	<div class="popup">
@@ -37,9 +42,10 @@ function createSomething() {
 		</div>
 	</div>
 </div>
+</section>
         `;
-    hrCustomPopup(title,htmlContent);
-	draw(getDateValues()[0], "mainSvg");
+    hrCustomPopup(title, htmlContent);
+    draw(getDateValues()[0], "mainSvg");
 }
 
 
@@ -49,8 +55,8 @@ function createClusters() {
     const htmlContent = `
     <h2>Hey this is cluster</h2>
     `;
-    hrCustomPopup(title,htmlContent);
-	
+    hrCustomPopup(title, htmlContent);
+
 }
 
 /*
@@ -61,7 +67,7 @@ function createCluster() {
         $(this).parents('.hr-custom-popup').removeClass('isVisible');
     })
 
-    // create your dom here 
+    // create your dom here
     $('.hr-custom-popup .content-wrapper .popup-content-section').html(`
             <h2>This is cluster</h2>
         `);

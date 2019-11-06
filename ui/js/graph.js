@@ -15,8 +15,8 @@ function draw(date, id) {
     var nodes_list = [];
     var svg = d3.select("#" + id)
         .attr("width", width)
-        .attr("height", height);
-        //.call(responsivefy);
+        .attr("height", height)
+        .call(responsivefy);
 	var defs = svg.append("svg:defs")
 	defs.append("pattern")
 	.attr("id", function(d) { return "pc"; })
@@ -46,11 +46,11 @@ function draw(date, id) {
 
     var node_radius = d3.scaleOrdinal()
         .domain([0, 1, 2, 3])
-        .range([20, 18, 18, 18]);
+        .range([20, 8, 8, 8]);
 
     var node_color = d3.scaleOrdinal()
         .domain([0, 1, 2, 3, 999])
-        .range(["url(#bug)", "url(#pc)", "url(#pc)", "url(#pc)", "url(#pc)"]);
+        .range(["url(#bug)", "#F0E68C", "#00FFFF", "#7FFF00", "#000000"]);
 
     var edge_length = d3.scaleOrdinal()
         .domain([0, 1, 2, 3])
