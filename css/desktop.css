@@ -38,7 +38,7 @@ input[type=text].input-text {
 .btn-voice {
   padding: 2px 16px;
   background: #635555;
-  font-size: 32px;
+  font-size: 24px;
   color: #fff;
 }
 
@@ -809,4 +809,32 @@ input[type=text].input-text {
   color: #000;
   font-size: 12px;
   padding: 5px;
+}
+
+.canobss-wrapper #notification-container {
+  float: right;
+  height: calc(100vh);
+  z-index: 99;
+  width: 396px;
+  display: none;
+  background: #264f5c;
+  color: #e2e2e2;
+}
+
+.canobss-wrapper .showCharm {
+  display: block !important;
+}
+
+.canobss-wrapper #notification-container .close-button-notification {
+  background: #264f5c;
+  padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  left: -37px;
+  font-weight: 500;
+  color: #fff;
+  top: 0;
+  border-radius: 7px 0px 0px 7px;
+  cursor: pointer;
 }

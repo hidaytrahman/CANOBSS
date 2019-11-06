@@ -17,16 +17,14 @@
             background-size: cover;
         }
 
-        #charm {
-            height: calc(100vh - 40px);
-            width: 396px;
-            background-color: #1F4F5D;
-        }
     </style>
 </head>
 
-<body class="m4-cloak">
-    <div data-role="charms" data-position="right" id="charm" class="p-4">
+<body class="m4-cloak canobss-wrapper">
+    <div id="notification-container" class="p-4">
+        <div class="close-button-notification">
+            X
+        </div>
         <div class="h-100 d-flex flex-column">
             <div class="alert-wrapper">
                 <div class="show-alert-wrapper">
@@ -148,6 +146,7 @@
         </div>
     </div>
 
+    <!-- popup wrapper end here -->
     <div class="hr-custom-popup popup-wrapper" id="custom-popup">
         <div class="content-wrapper">
             <div class="close-button">
@@ -200,7 +199,7 @@
 
                     </div>
 
-                    <a href="#" class="bg-indigo fg-white tile-custom-view" onclick="openCharm()">
+                    <a href="#" class="bg-indigo fg-white tile-custom-view">
                         <span class="mif-done_all icon"></span>
                         <span class="branding-bar">Diff. between 2 Dates</span>
                     </a>
@@ -210,7 +209,7 @@
 
                     </div>
 
-                    <div class="bg-cyan fg-white tile-custom-view">
+                    <div class="bg-cyan fg-white tile-custom-view notifications-list">
                         <span class="mif-envelop icon"></span>
                         <span class="branding-bar">Notification</span>
                         <span class="badge-bottom">10</span>
@@ -219,45 +218,11 @@
             </div>
 
         </div>
-        <div class="task-bar">
-            <div class="task-bar-section">
-                <button class="task-bar-item" id="start-menu-toggle"><span class="mif-windows"></span></button>
-                <div class="start-menu force-hide" data-role="dropdown" data-toggle-element="#start-menu-toggle">
-                    <div class="start-menu-inner h-100">
-                        <div class="explorer">
-                            <ul class="v-menu w-100 bg-brandColor2 fg-white hr-custom-menu">
-                                <li onclick="createLive()"><span class="mif-florist icon-ui"></span><a>Live</a>
-                                </li>
-                                <li onclick="createCluster()"><span class="mif-cloud icon-ui"></span><a>Clustering</a>
-                                </li>
-                                <li onclick="createWindow()"><span class="mif-firefox icon-ui"></span><a>Node Info</a>
-                                </li>
-                                <li onclick="createWindowWithCustomButtons()"><span
-                                        class="mif-chart-bars2 icon-ui"></span><a>Animated Sequence</a></li>
-                                <li onclick="createNodeDiff()"><span class="mif-done_all icon-ui"></span><a>Node
-                                        Diff. between 2 Dates</a></li>
-                                <li onclick="createWindow()"><span class="mif-florist icon-ui"></span><a>Preferences</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="task-bar-section tasks"></div>
-            <div class="task-bar-section system-tray ml-auto">
-                <button class="task-bar-item" id="open-charm" onclick="openCharm()"><span
-                        class="mif-comment"></span></button>
-                <span style="line-height: 40px;" class="pr-4">
-                    <span data-role="clock" class="w-auto fg-white reduce-1" data-show-date="false"></span>
-                </span>
-            </div>
-        </div>
+        
     </div>
 
     <!-- Scripts -->
-    <script src="js/vendor/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-        crossorigin="anonymous"></script>
+    <script src="js/vendor/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
 
     <!-- VOICE -->
     <script src="js/vendor/annyang.min.js"></script>
@@ -267,10 +232,11 @@
     <script src="js/vendor/metro.js"></script>
     <script src="js/desktop.js"></script>
 
-    <script src="js/main.js"></script>
+    
 
     <!-- AJAX Stuff-->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/vendor/axios.min.js"></script>
+    <script src="js/main.js"></script>
 
 
 </body>

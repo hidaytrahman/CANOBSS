@@ -5,11 +5,6 @@ $(document).ready(function () {
         if (annyang) {
             // Let's define our first command. First the text we expect, and then the function it should call
             var commands = {
-
-                'good morning': function () {
-                    alert('Hey Good morning');
-                },
-
                 'show me notification': function () {
                     alert('notification');
                 }
@@ -20,18 +15,9 @@ $(document).ready(function () {
                 'what has changed in my network': function () {
                     alert('changed in my network');
                 },
-                'what are top five anomalous nodes': function () {
+                'show top five anomalous nodes': function () {
                     alert('Its anomalous nodes');
                 }
-                ,
-                'All the nodes in the database limit to 2': function () {
-                    alert('limit to 2');
-                }
-                ,
-                'all the nodes connected with the node 1.2.3.4': function () {
-                    alert('node 1.2.3.4');
-                }
-
             };
 
             // Add our commands to annyang

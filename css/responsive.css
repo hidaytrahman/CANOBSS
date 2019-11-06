@@ -23,11 +23,24 @@
         font-size: 10px;
     }
 
+    .charm-bottom {
+        display: none;
+    }
+
     .btn-voice {
         font-size: 21px;
     }
 
     input[type=text].input-text {
         font-size: 17px;
+    }
+
+    .canobss-wrapper #notification-container .close-button-notification {
+        right: 0;
+        left: auto;
+    }
+
+    .canobss-wrapper #notification-container {
+        width: 300px;
     }
 }

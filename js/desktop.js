@@ -305,13 +305,20 @@ function createNodeDiff() {
 
 
 
-function openCharm() {
-    var charm = $("#charm").data("charms");
-    charm.toggle();
+function openNotificationBar() {
+    $("#charm").addClass('showCharm');
+};
+
+$('.notifications-list').on("click", function () {
+    $("#notification-container").toggleClass('showCharm');
+});
+
+function closeNotificationBar() {
+    $("#notification-container").removeClass('showCharm');
 }
 
-$(".window-area").on("click", function () {
-    Metro.charms.close("#charm");
+$("#notification-container .close-button-notification").on("click", function () {
+    closeNotificationBar();
 });
 
 $(".charm-tile").on("click", function () {
