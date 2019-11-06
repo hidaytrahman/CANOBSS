@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     <link href="css/desktop.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
 
     <title>CANOBSS</title>
 
@@ -160,7 +161,7 @@
             </section>
             <!-- Here data will render specificlly -->
             <footer class="popup-footer">
-               
+
             </footer>
         </div>
     </div>
@@ -177,36 +178,42 @@
             <!-- Search are end here -->
 
             <div class="tiles-wrapper">
-                <div class="tiles-grid tiles-group size-6 fg-white" data-group-title="General">
-                    <a href="#" onclick="createSomething()" data-role="tile" class="bg-indigo fg-white">
+                <div class="hr-grid" data-group-title="General">
+                    <a href="#" onclick="createSomething()" class="bg-indigo fg-white tile-custom-view">
                         <span class="mif-florist icon"></span>
                         <span class="branding-bar">Live</span>
                     </a>
-                    <div data-role="tile" onclick="createClusters()" class="bg-cyan fg-white">
+                    <div onclick="createClusters()" class="bg-cyan fg-white tile-custom-view">
                         <span class="mif-cloud icon"></span>
                         <span class="branding-bar">Clustering</span>
 
                     </div>
-                    <div data-role="tile" class="bg-orange fg-white">
+                    <div class="bg-orange fg-white tile-custom-view">
                         <span class="mif-firefox icon"></span>
                         <span class="branding-bar">Node Info</span>
 
                     </div>
 
-                    <div data-role="tile" class="bg-orange fg-white">
+                    <div class="bg-orange fg-white tile-custom-view">
                         <span class="mif-chart-bars2 icon"></span>
                         <span class="branding-bar">Animated Sequence</span>
 
                     </div>
 
-                    <a href="#" data-role="tile" class="bg-indigo fg-white" onclick="openCharm()">
+                    <a href="#" class="bg-indigo fg-white tile-custom-view" onclick="openCharm()">
                         <span class="mif-done_all icon"></span>
                         <span class="branding-bar">Diff. between 2 Dates</span>
                     </a>
-                    <div data-role="tile" class="bg-cyan fg-white" id="open-charm">
+                    <div class="bg-cyan fg-white tile-custom-view" id="open-charm">
                         <span class="mif-florist icon"></span>
                         <span class="branding-bar">Preferences</span>
 
+                    </div>
+
+                    <div class="bg-cyan fg-white tile-custom-view">
+                        <span class="mif-envelop icon"></span>
+                        <span class="branding-bar">Notification</span>
+                        <span class="badge-bottom">10</span>
                     </div>
                 </div>
             </div>

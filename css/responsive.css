@@ -1,0 +1,33 @@
+@media screen and (max-width: 991px) {
+
+    .hr-grid {
+        width: 96vw;
+    }
+
+    .tiles-wrapper {
+        margin-top: 1vh;
+    }
+
+    .tile-custom-view {
+        min-height: 110px;
+        margin: 1px;
+        width: 50%;
+        min-width: 145px;
+    }
+
+    .tile-custom-view .icon {
+        font-size: 35px;
+    }
+
+    .tile-custom-view .branding-bar {
+        font-size: 10px;
+    }
+
+    .btn-voice {
+        font-size: 21px;
+    }
+
+    input[type=text].input-text {
+        font-size: 17px;
+    }
+}

@@ -708,7 +708,7 @@ input[type=text].input-text {
 
 .tiles-wrapper {
   margin: auto;
-  max-width: 810px;
+  max-width: 1016px;
   margin-top: 25vh;
   display: flex;
   flex-direction: column;
@@ -716,6 +716,7 @@ input[type=text].input-text {
   align-content: center;
   align-items: center;
 }
+
 
 .force-hide {
   display: none !important;
@@ -757,4 +758,55 @@ input[type=text].input-text {
 .hr-custom-popup h1 {
   font-size: 24px;
   margin: 0;
+}
+
+.hr-grid {
+  width: 66vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+}
+
+.tile-custom-view {
+  width: 14%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  flex: 1;
+  cursor: pointer;
+  min-height: 146px;
+  margin: 1px;
+  transition: all 0.7s ease;
+}
+
+.tile-custom-view:hover {
+  text-decoration: none;
+  background-color: #141534 !important;
+}
+
+.tile-custom-view .icon {
+  font-size: 60px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
+.tile-custom-view .branding-bar {
+  font-size: 14px;
+}
+
+.tile-custom-view .badge-bottom {
+  background: #FFEB3B;
+  position: absolute;
+  right: 0px;
+  top: 0;
+  height: 26px;
+  border-radius: 0;
+  color: #000;
+  font-size: 12px;
+  padding: 5px;
 }
