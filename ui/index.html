@@ -4,48 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     <link href="css/desktop.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/barchart.css">
+    <link rel="stylesheet" type="text/css" href="css/graph.css">
+	<link href="css/responsive.css" rel="stylesheet">
 
-    <title>Desktop demo - Data Scientist</title>
+    <title>CANOBSS</title>
 
     <style>
         .window-area {
-            background: url('./images/wallpaper-2.jpg') center center no-repeat;
+            background: url('./images/background.PNG') center center no-repeat;
             background-size: cover;
         }
 
-        #charm {
-            height: calc(100vh - 40px);
-            width: 396px;
-            background-color: #1F4F5D;
-        }
     </style>
 </head>
 
-<body class="m4-cloak">
-    <div data-role="charms" data-position="right" id="charm" class="p-4">
+<body class="m4-cloak canobss-wrapper">
+    <div id="notification-container" class="p-4">
+        <div class="close-button-notification">
+            X
+        </div>
         <div class="h-100 d-flex flex-column">
             <div class="alert-wrapper">
                 <div class="show-alert-wrapper">
-                    <p>Get Alert</p>
-                    <section class="alerts-listing">
-
+                    <p>Alerts</p>
+                    <section class="alerts-listing scroll-it">
+                        <div class="alert">There is no alert</div>
                     </section>
+                    <a href="#" id="new-alert">Set new alert?</a>
                 </div>
                 <div class="set-alert-wrapper">
                     <div id="primary-content" class="primary-content">
                         <div class="set-alert-form">
-                            <h4 class="font-quicksand">Set Alert</h4>
+                            <h4 class="font-quicksand">Set Alerts </h4>
+                            <div class="enable-container">
+                                <input type="checkbox" value="false" class="show-notifications" id="switch" /><label
+                                    for="switch">Toggle</label>
+                            </div>
                             <div class="input-area">
+                                <label>Something</label>
                                 <select class="set-control something1">
-                                    <option value="1000">1000</option>
-                                    <option value="1000">1000</option>
-                                    <option value="1000">1000</option>
-                                    <option value="1000">1000</option>
-                                    <option value="1000">1000</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
                                 </select>
+                                <label>of</label>
                                 <select class="set-control something2">
                                     <option value="1.0.2.5.">1.0.2.5.</option>
                                     <option value="1.2.8.5.">1.2.8.5.</option>
@@ -53,10 +60,12 @@
                                     <option value="1.5.8.5.">1.5.8.5.</option>
                                     <option value="1.6.8.5.">1.6.8.5.</option>
                                 </select>
-                                <input type="text" class="something3" required placeholder="Input something" />
-                                <div class="submit-button">Done</div>
+                                <label>by</label>
+                                <input type="text" class="set-control something3" required
+                                    placeholder="Input something" />
+                                <div class="submit-button">Set</div>
+
                             </div>
-                          
                         </div>
                     </div>
 
@@ -65,10 +74,10 @@
             <!-- Alert wrapper end here -->
 
             <div class="text-center m-4">
-                    <span>Brief Panel</span>
-                </div>
+                <span>Notifications</span>
+            </div>
             <div class="charm-top">
-                
+
 
                 <div class="charm-notify">
                     <span class="icon mif-info"></span>
@@ -113,45 +122,30 @@
                     </div>
                 </div>
 
-                
-
-                <!-- 
-                <div class="charm-notify">
-                    <span class="icon mif-info"></span>
-                    <div class="title">You have a news</div>
-                    <div class="content">The hornpipe fears with endurance, vandalize the galley until it waves.</div>
-                </div>
-
-                <div class="clear mt-4 reduce-1">
-                    <span class="place-left c-pointer">Collapse</span>
-                    <span class="place-right c-pointer">Clear notifies</span>
-                </div>
-                -->
             </div>
-<hr>
-
-            <div class="charm-bottom mt-auto">
-                <div class="d-flex">
-                    <div class="charm-tile">
-                        <span class="icon mif-wifi-full"></span>
-                        <span class="caption">Network</span>
-                    </div>
-                    <div class="charm-tile" id="notification">
-                        <span class="icon mif-cog"></span>
-                        <span class="caption">Notification</span>
-                    </div>
-                    <div class="charm-tile active">
-                        <span class="icon mif-rocket"></span>
-                        <span class="caption">Fly mode</span>
-                    </div>
-                    <div class="charm-tile">
-                        <span class="icon mif-bluetooth"></span>
-                        <span class="caption">Not connected</span>
-                    </div>
-                </div>
-            </div>
+            <hr>
         </div>
     </div>
+
+    <!-- popup wrapper end here -->
+    <div class="hr-custom-popup popup-wrapper" id="custom-popup">
+        <div class="content-wrapper">
+            <div class="close-button">
+                <span class="mif-cross"></span>
+            </div>
+            <header class="popup-header">
+                <h2>This is title</h2>
+            </header>
+            <section class="popup-content-section">
+
+            </section>
+            <!-- Here data will render specificlly -->
+            <footer class="popup-footer">
+
+            </footer>
+        </div>
+    </div>
+    <!-- popup wrapper end here -->
 
     <div class="desktop">
         <div class="window-area">
@@ -164,58 +158,69 @@
             </section>
             <!-- Search are end here -->
 
-        </div>
-        <div class="task-bar">
-            <div class="task-bar-section">
-                <button class="task-bar-item" id="start-menu-toggle"><span class="mif-windows"></span></button>
-                <div class="start-menu" data-role="dropdown" data-toggle-element="#start-menu-toggle">
-                    <div class="start-menu-inner h-100">
-                        <div class="explorer">
-                            <ul class="v-menu w-100 bg-brandColor2 fg-white hr-custom-menu">
-                                <li onclick="createWindowYoutube()"><span class="mif-florist icon-ui"></span><a>Live</a>
-                                </li>
-                                <li onclick="createGraph()"><span class="mif-cloud icon-ui"></span><a>Clustering</a>
-                                </li>
-                                <li onclick="createWindow()"><span class="mif-firefox icon-ui"></span><a>Node Info</a>
-                                </li>
-                                <li onclick="createWindowWithCustomButtons()"><span
-                                        class="mif-chart-bars2 icon-ui"></span><a>Animated Sequence</a></li>
-                                <li onclick="createNodeDiff()"><span class="mif-done_all icon-ui"></span><a>Node
-                                        Diff. between 2 Dates</a></li>
-                                <li onclick="createWindow()"><span class="mif-florist icon-ui"></span><a>Preferences</a>
-                                </li>
-                            </ul>
-                        </div>
+            <div class="tiles-wrapper">
+                <div class="hr-grid" data-group-title="General">
+                    <a href="#" onclick="createSomething()" class="bg-indigo fg-white tile-custom-view">
+                        <span class="mif-florist icon"></span>
+                        <span class="branding-bar">Live</span>
+                    </a>
+                    <div onclick="createClusters()" class="bg-cyan fg-white tile-custom-view">
+                        <span class="mif-cloud icon"></span>
+                        <span class="branding-bar">Clustering</span>
+
+                    </div>
+                    <div class="bg-orange fg-white tile-custom-view">
+                        <span class="mif-firefox icon"></span>
+                        <span class="branding-bar">Node Info</span>
+
+                    </div>
+
+                    <div class="bg-cyan fg-white tile-custom-view">
+                        <span class="mif-chart-bars2 icon"></span>
+                        <span class="branding-bar">Animated Sequence</span>
+
+                    </div>
+
+                    <a href="#" class="bg-indigo fg-white tile-custom-view">
+                        <span class="mif-done_all icon"></span>
+                        <span class="branding-bar">Diff. between 2 Dates</span>
+                    </a>
+                    <div class="bg-orange fg-white tile-custom-view" id="open-charm">
+                        <span class="mif-florist icon"></span>
+                        <span class="branding-bar">Preferences</span>
+
+                    </div>
+
+                    <div class="bg-cyan fg-white tile-custom-view notifications-list">
+                        <span class="mif-envelop icon"></span>
+                        <span class="branding-bar">Notification</span>
+                        <span class="badge-bottom">10</span>
                     </div>
                 </div>
             </div>
+            <!-- Tiles wrapper end here -->
 
-            <div class="task-bar-section tasks"></div>
-            <div class="task-bar-section system-tray ml-auto">
-                <button class="task-bar-item" id="open-charm" onclick="openCharm()"><span
-                        class="mif-comment"></span></button>
-                <span style="line-height: 40px;" class="pr-4">
-                    <span data-role="clock" class="w-auto fg-white reduce-1" data-show-date="false"></span>
-                </span>
-            </div>
         </div>
+        
     </div>
 
 
-    <script src="js/vendor/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    <script src="js/vendor/jquery-2.2.4.min.js"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/vendor/annyang.min.js"></script>
     <script src="js/voice-commands.js"></script>
 
+    <!-- MAIN THEME -->
     <script src="js/vendor/metro.js"></script>
-    <script src="js/desktop.js"></script>
-    <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+    <script src="js/notifications.js"></script>
     <script src="js/graph.js"></script>
-
+    
+    <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <!-- AJAX Stuff-->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+	<script src="js/vendor/axios.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

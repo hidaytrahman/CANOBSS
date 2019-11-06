@@ -1,0 +1,36 @@
+.hidden-div
+{
+  display: none;
+}
+
+table, th, td
+{
+  border: 2px solid black;
+}
+
+
+circle {
+  stroke-width: 1.5px;
+}
+
+line {
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+.nodes circle {
+  cursor: pointer;
+  fill: #ff3399;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+.links line {
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: .5px;
+}
+
+.timeSvg{
+  outline: 3px solid grey;
+}
