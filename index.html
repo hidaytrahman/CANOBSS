@@ -12,7 +12,7 @@
 
     <style>
         .window-area {
-            background: url('./images/wallpaper-2.jpg') center center no-repeat;
+            background: url('./images/background.PNG') center center no-repeat;
             background-size: cover;
         }
 
@@ -160,7 +160,7 @@
             </section>
             <!-- Here data will render specificlly -->
             <footer class="popup-footer">
-                <p>Not required</p>
+               
             </footer>
         </div>
     </div>
@@ -177,7 +177,7 @@
             <!-- Search are end here -->
 
             <div class="tiles-wrapper">
-                <div class="tiles-grid tiles-group size-3 fg-white" data-group-title="General">
+                <div class="tiles-grid tiles-group size-6 fg-white" data-group-title="General">
                     <a href="#" onclick="createSomething()" data-role="tile" class="bg-indigo fg-white">
                         <span class="mif-florist icon"></span>
                         <span class="branding-bar">Live</span>
@@ -199,11 +199,11 @@
 
                     </div>
 
-                    <a href="#" data-role="tile" class="bg-indigo fg-white">
+                    <a href="#" data-role="tile" class="bg-indigo fg-white" onclick="openCharm()">
                         <span class="mif-done_all icon"></span>
                         <span class="branding-bar">Diff. between 2 Dates</span>
                     </a>
-                    <div data-role="tile" class="bg-cyan fg-white">
+                    <div data-role="tile" class="bg-cyan fg-white" id="open-charm">
                         <span class="mif-florist icon"></span>
                         <span class="branding-bar">Preferences</span>
 
