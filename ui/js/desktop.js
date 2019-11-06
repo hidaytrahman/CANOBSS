@@ -82,25 +82,7 @@ var w_titles = [
     'rocket', 'apps', 'cog', 'anchor'
 ];
 
-function getDateValues(){
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
 
-    var currentDateToSearch = dd+"-"+mm+"-"+yyyy;
-    var currentDateToShow = yyyy+"-"+mm+"-"+dd;
-
-    var yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    dd = String(yesterday.getDate()).padStart(2, '0');
-    mm = String(yesterday.getMonth() + 1).padStart(2, '0'); //January is 0!
-    yyyy = yesterday.getFullYear();
-
-    var yesterdayDateToSearch = dd+"-"+mm+"-"+yyyy;
-    var yesterdayDateToShow = yyyy+"-"+mm+"-"+dd;
-    return [currentDateToSearch, currentDateToShow, yesterdayDateToSearch, yesterdayDateToShow];
-}
 
 function createWindow() {
     var index = Metro.utils.random(0, 3);
@@ -254,7 +236,6 @@ function createGraph() {
 
 
 function createNodeDiff() {
-    var dateValues = getDateValues();
     Desktop.createWindow({
         resizeable: true,
         draggable: true,
