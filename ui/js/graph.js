@@ -46,7 +46,7 @@ function draw(date, id) {
 
     var node_radius = d3.scaleOrdinal()
         .domain([0, 1, 2, 3])
-        .range([20, 8, 8, 8]);
+        .range([20, 8, 6, 4]);
 
     var node_color = d3.scaleOrdinal()
         .domain([0, 1, 2, 3, 999])
