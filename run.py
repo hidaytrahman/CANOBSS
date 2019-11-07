@@ -18,7 +18,7 @@ from flask import jsonify
 from flask import request
 
 
-data = pd.read_csv("ia-crime-moreno.csv")
+data = pd.read_csv("/CANOBSS/ia-crime-moreno.csv")
 
 app = flask.Flask(__name__, static_folder="ui")
 
@@ -28,23 +28,23 @@ def static_proxy():
 
 @app.route('/js/<path:path>')
 def send_js(path):
-    return send_from_directory('ui\js', path)
+    return send_from_directory('ui/js', path)
 
 @app.route('/css/<path:path>')
 def send_css(path):
-    return send_from_directory('ui\css', path)
+    return send_from_directory('ui/css', path)
 
 @app.route('/data/<path:path>')
 def send_data(path):
-    return send_from_directory('ui\data', path)
+    return send_from_directory('ui/data', path)
 
 @app.route('/images/<path:path>')
 def send_images(path):
-    return send_from_directory('ui\images', path)
+    return send_from_directory('ui/images', path)
 
 @app.route('/json/<path:path>')
 def send_json(path):
-    return send_from_directory('ui\json', path)
+    return send_from_directory('ui/json', path)
 
 @app.route('/timeGraph', methods=['POST'])
 def timeGraph():
@@ -221,6 +221,6 @@ def top5ChangeFeatures():
     
 
 print('\nGo to http://localhost:8000 to see the server\n')
-app.run(port=8000)
+app.run(host='0.0.0.0', port=8000)
 
 
