@@ -937,3 +937,27 @@ input[type=text].input-text {
   top: -3px;
   right: 0;
 }
+
+.state-details {
+  cursor: pointer;
+}
+.more-details {
+  position: absolute;
+  top: 54%;
+  display: none;
+}
+
+.more-details img{
+  width: 99%;
+}
+
+.more-details.isOn {
+  display: block;
+  background: #fff;
+}
+
+.close-it-details {
+  background: #f6eded;
+  padding: 9px;
+  display: inline-block;
+}
