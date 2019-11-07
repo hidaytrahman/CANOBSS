@@ -461,8 +461,8 @@ function createJSONTimeGraph() {
     var file2Exists = false;
     var filePath1 = '/json/graph-'+finalDate1+'.json';
     var filePath2 = '/json/graph-'+finalDate2+'.json';
-    file1Exists = checkFileExists(filePath1);
-    file2Exists = checkFileExists(filePath2);
+    file1Exists = fileExists(filePath1);
+    file2Exists = fileExists(filePath2);
 
     if(!file1Exists){
         $.ajax({
@@ -515,9 +515,6 @@ function createTimeGraphs(){
     createJSONTimeGraph();
     draw(dateValues[2], "timeSvg1");
     draw(dateValues[0], "timeSvg2");
-
-    getTop5Diff(dateValues[2], dateValues[0]);
-  
 }
 
 function getTop5Diff(date1, date2){
@@ -625,15 +622,11 @@ function popupClose2()
 	ele1.innerHTML="";
 }
 
-function checkFileExists(filePath){
-    $.ajax({
-        type: 'HEAD',
-        url: filePath,
-        success: function(msg){
-          return true;
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            return false;
-        }
-      });
+
+function fileExists(url)
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status==200;
 }
