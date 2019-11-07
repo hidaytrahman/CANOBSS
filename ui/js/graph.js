@@ -8,15 +8,22 @@ function draw(date, id) {
         .velocityDecay(0.1)
         .force("x", d3.forceX(width / 2).strength(.1))
         .force("y", d3.forceY(height / 2).strength(.1))
-        .force("charge", d3.forceManyBody().strength(-40))
-        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(50).strength(1));
+        .force("charge", d3.forceManyBody().strength(-10))
+        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(25).strength(1));
         //.force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
 
     var nodes_list = [];
-    var svg = d3.select("#" + id)
-        .attr("width", width)
-        .attr("height", height)
-        .call(responsivefy);
+	var svg;
+   if(id = "mainSvg"){
+		 svg = d3.select("#" + id)
+			.attr("width", width)
+		.call(responsivefy);
+	}else
+	{
+		svg = d3.select("#" + id)
+			.attr("width", width)
+		//.call(responsivefy);
+	}
 	var defs = svg.append("svg:defs")
 	defs.append("pattern")
 	.attr("id", function(d) { return "pc"; })
@@ -145,6 +152,7 @@ function draw(date, id) {
 				}
 				else
 				{
+					document.getElementById("popuph2").textContent = 'Graph Features of Node';
 					barGraphDegree(this);
 					barGraphCentrality(this);
 				}
@@ -339,125 +347,57 @@ function draw(date, id) {
 
 	function anGraphDegree(ref)
 	{
-		 var data = [95]
-
-    var width = 500,
-        barHeight = 20,
-        margin = 1;
-
-    var scale = d3.scaleLinear()
-                 .domain([d3.min(data), d3.max(data)])
-                 .range([50, 500]);
-	
-    var svg1 = d3.select("#bar");
-	svg1.append("h3")
-		.text("Current Flow Difference")
-    var svg=svg1.append("svg")
-                  .attr("width", width)
-                  .attr("height", barHeight * data.length);
-
-    var g = svg.selectAll("g")
-                  .data(data)
-                  .enter()
-                  .append("g")
-                  .attr("transform", function (d, i) {
-                      return "translate(0," + i * barHeight + ")";
-                  });
-
-    g.append("rect")
-       .attr("width", function (d) {
-           return scale(d);
-       })
-       .attr("height", barHeight - margin)
-
-    g.append("text")
-       .attr("x", function (d) { return (scale(d)); })
-       .attr("y", barHeight / 2)
-       .attr("dy", ".35em")
-       .text(function (d) { return d; });
+		 
+		 var ele = document.getElementById("bar");
+		var div = document.createElement("div");
+		document.getElementById("popuph2").textContent = 'Anamoly Score of Node';
+		
+		var span = document.createElement("span");
+		span.appendChild(document.createTextNode("Last flow of this node is 95% different"));
+		
+    
+	div.appendChild(span);
+	ele.appendChild(div);
+		 
 	   
 	 barGraphDegree1(ref);
 	
 		
 	}
+	function  barGraphDegree1(ref)
+	{
+		
+		 var ele = document.getElementById("bar");
+		 var div=document.createElement("div");
+		 div.id="barChart";
+		 div.classList.add("barchart-wrapper");
+		 ele.appendChild(div);
+		 var data = google.visualization.arrayToDataTable([
+               ['Features', 'Values'],
+               ['InDegree',  .33],
+			   ['OutDegree',  .55],
+               ['ClosenessC',  .66],
+               ['DegreeC',.44],
+			    ['BetweenessC', .88],
+               ['EigenC',.44]
+              
+               
+            ]);
+
+            var options = {title: '',
+            		colors: ['steelblue'],
+					
+            		legend: {position: 'none'}
+            }; 
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.BarChart(document.getElementById('barChart'));
+            chart.draw(data, options);
+			markovButton();
 	
-	function barGraphDegree1(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 700 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-
-// set the ranges
-
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['InDegree', 'OutDegree','ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
-        var attributes_values = [.33,.22,.44,.33,.55,.32];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
-
-        var attributes_json = JSON.stringify(attributes_array);
-
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
-
-        var xAxis = d3.axisBottom(x);
-
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {             
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
-        })
-        
-        var svg1 = d3.select("#bar")
-		svg1.append("div");
-		var svg=svg1.append("svg")
-        .attr("width", 700)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 1]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-		markovButton()
-    }
+		
+	}
+	
 	function markovButton()
 	{
 		var ele = document.getElementById("bar");
@@ -470,147 +410,38 @@ function draw(date, id) {
 	ele.appendChild(div);
 		
 	}
-    function barGraphDegree(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 260 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['InDegree', 'OutDegree'];
-        var attributes_values = [nodeData.in_degree, nodeData.out_degree];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
+	function barGraphDegree(ref)
+	{
+		 var ele = document.getElementById("bar");
+		 var div=document.createElement("div");
+		 div.id="barChart";
+		  div.classList.add("barchart-wrapper");
+		 ele.appendChild(div);
+		var nodeData = ref.childNodes[0].__data__;
+		 var data = google.visualization.arrayToDataTable([
+               ['Features', 'Values'],
+               ['InDegree',  nodeData.in_degree/100],
+			   ['OutDegree',  nodeData.out_degree/100],
+               ['ClosenessC',  nodeData.closeness_c],
+               ['DegreeC',nodeData.degree_c],
+			    ['BetweenessC',  nodeData.betweeness_c],
+               ['EigenC',nodeData.eigen_c]
+              
+               
+            ]);
 
-        var attributes_json = JSON.stringify(attributes_array);
+            var options = {title: '',
+            		colors: ['steelblue'],
+					
+            		legend: {position: 'none'}
+            }; 
 
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
-
-        var xAxis = d3.axisBottom(x);
-
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {             
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
-        })
-        
-        var svg = d3.select("#bar").append("svg")
-        .attr("width", 300)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 25]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-    }
-
-    function barGraphCentrality(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 460 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
-        var attributes_values = [nodeData.closeness_c, nodeData.degree_c, nodeData.betweeness_c, nodeData.eigen_c];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
-
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
-
-        var xAxis = d3.axisBottom(x);
-
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
-        })
-        
-        var svg = d3.select("#bar").append("svg")
-        .attr("width", 500)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 0.1]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-    }
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.BarChart(document.getElementById('barChart'));
+            chart.draw(data, options);
+         
+	}
+   
 }
 
 
@@ -761,15 +592,28 @@ function popupClose()
 	var ele1 = document.getElementById("bar")
 	ele1.innerHTML="";
 }
+
 function markov()
 {
 	var ele = document.getElementById("popup2")
 	ele.style.visibility="visible";
 	ele.style.opacity=1;
-	 var img = document.createElement('img'); 
-            img.src = 'images/markov.png'; 
- document.getElementById('markov').appendChild(img); 
-	
+    var $markov = $('#markov');
+    var domainName = 'http://localhost:4300/markovchains/#';
+    var frameBefore = domainName+'%7B%22tm%22%3A%5B%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0.5%2C0%2C0%2C0%2C0%2C0%2C0.5%2C0%5D%2C%5B0%2C0.333333333%2C0%2C0%2C0.666666667%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0.04%2C0%2C0.12%2C0.52%2C0.04%2C0.12%2C0.04%2C0%2C0%2C0.12%5D%2C%5B0%2C0%2C0.019607843%2C0.176470588%2C0.539215686%2C0.009803922%2C0.039215686%2C0%2C0.009803922%2C0.009803922%2C0.196078431%5D%2C%5B0%2C0%2C0%2C0%2C0.5%2C0%2C0%2C0.5%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.875%2C0%2C0%2C0%2C0%2C0.125%2C0%5D%2C%5B0%2C0%2C0%2C0.666666667%2C0.333333333%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.5%2C0%2C0%2C0%2C0%2C0%2C0.5%5D%2C%5B0%2C0%2C0%2C0.166666667%2C0.5%2C0%2C0%2C0%2C0.166666667%2C0%2C0.166666667%5D%2C%5B0%2C0%2C0.026315789%2C0%2C0.447368421%2C0%2C0.026315789%2C0.026315789%2C0.078947368%2C0.078947368%2C0.315789474%5D%5D%7D';
+    var frameDuring = domainName+'%7B"tm"%3A%5B%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.5%2C0%2C0%2C0%2C0.5%5D%2C%5B0%2C0.333333333%2C0%2C0%2C0.666666667%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0.705882353%2C0.294117647%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0.007092199%2C0.021276596%2C0.063829787%2C0.822695035%2C0.021276596%2C0.021276596%2C0.007092199%2C0.035460993%5D%2C%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0.166666667%2C0.666666667%2C0%2C0.166666667%2C0%2C0%5D%5D%7D';
+    var frameAfter = domainName+'%7B%22tm%22%3A%5B%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0.125%2C0%2C0.25%2C0%2C0%2C0%2C0%2C0%2C0.125%2C0.5%5D%2C%5B0%2C0.333333333%2C0%2C0%2C0.333333333%2C0%2C0%2C0.333333333%2C0%2C0%2C0%5D%2C%5B0%2C0.08%2C0%2C0.12%2C0.36%2C0.08%2C0.12%2C0.12%2C0.04%2C0%2C0.08%5D%2C%5B0%2C0%2C0.0125%2C0.175%2C0.575%2C0.05%2C0.0875%2C0%2C0.0125%2C0.0125%2C0.075%5D%2C%5B0%2C0%2C0.166666667%2C0%2C0.5%2C0%2C0.166666667%2C0.166666667%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.75%2C0%2C0.083333333%2C0%2C0%2C0.083333333%2C0.083333333%5D%2C%5B0%2C0.076923077%2C0.076923077%2C0.307692308%2C0%2C0%2C0%2C0.307692308%2C0.076923077%2C0%2C0.153846154%5D%2C%5B0%2C0.181818182%2C0%2C0.090909091%2C0%2C0%2C0%2C0.090909091%2C0.363636364%2C0%2C0.272727273%5D%2C%5B0%2C0%2C0%2C0.166666667%2C0.5%2C0%2C0%2C0%2C0.166666667%2C0%2C0.166666667%5D%2C%5B0%2C0.034482759%2C0%2C0%2C0.275862069%2C0%2C0%2C0.103448276%2C0.137931034%2C0.103448276%2C0.344827586%5D%5D%7D';
+    var iframeContent = `
+    <section class="markov-wrapper">
+        <div class="iframe-wrapper">
+            <iframe class="frame-mark frame-before" src=`+frameBefore+` height="100%" width="100%"></iframe>
+            <iframe class="frame-mark frame-during" src=`+frameDuring+` height="100%" width="100%"></iframe>
+            <iframe class="frame-mark frame-after" src=`+frameAfter+` height="100%" width="100%"></iframe>
+        </div>
+    <section>
+    `;
+
+    $markov.html(iframeContent);	
 }
 function popupClose2()
 {

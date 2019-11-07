@@ -36,7 +36,7 @@ function createLiveView() {
         <svg width="500" height="500" id="mainSvg"></svg>
         <div id="popup1" class="overlay">
 	<div class="popup">
-		<h2 id="popuph2">Node Details</h2>
+		<h2 id="popuph2">Graph Features of Node</h2>
 		<a class="close" href = javascript:void(0) onclick="popupClose()">&times;</a>
 		<div id="bar"class="content">
 			

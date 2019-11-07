@@ -186,7 +186,7 @@
                         <span class="mif-done_all icon"></span>
                         <span class="branding-bar">Diff. between 2 Dates</span>
                     </a>
-                    <div class="bg-orange fg-white tile-custom-view" id="open-charm">
+                    <div onclick="createIframAnimation()" class="bg-orange fg-white tile-custom-view" >
                         <span class="mif-florist icon"></span>
                         <span class="branding-bar">Preferences</span>
 
@@ -216,7 +216,10 @@
     <script src="js/vendor/metro.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/graph.js"></script>
-    
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+	  </script>
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <!-- AJAX Stuff-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
