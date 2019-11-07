@@ -868,6 +868,7 @@ input[type=text].input-text {
   padding-bottom: 0;
   border-radius: 7px;
   max-height: 49px;
+  z-index: 99;
 }
 
 
@@ -876,3 +877,17 @@ input[type=text].input-text {
 }
 
 .live-preview-wrapper {}
+
+.iframe-wrapper {
+  height: 81vh;
+  padding: 1%;
+}
+
+/* DIFF PAGE */
+.diff-wrapper .map-area-wrapper {
+  display: flex;
+}
+
+.diff-wrapper .map-area-wrapper svg {
+  width: 50%;
+}
