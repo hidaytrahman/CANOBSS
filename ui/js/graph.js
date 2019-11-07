@@ -13,9 +13,17 @@ function draw(date, id) {
         //.force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
 
     var nodes_list = [];
-    var svg = d3.select("#" + id)
-        .attr("width", width)
-       // .call(responsivefy);
+	var svg;
+   if(id = "mainSvg"){
+		 svg = d3.select("#" + id)
+			.attr("width", width)
+		.call(responsivefy);
+	}else
+	{
+		svg = d3.select("#" + id)
+			.attr("width", width)
+		//.call(responsivefy);
+	}
 	var defs = svg.append("svg:defs")
 	defs.append("pattern")
 	.attr("id", function(d) { return "pc"; })
@@ -356,87 +364,40 @@ function draw(date, id) {
 	
 		
 	}
+	function  barGraphDegree1(ref)
+	{
+		
+		 var ele = document.getElementById("bar");
+		 var div=document.createElement("div");
+		 div.id="barChart";
+		 div.classList.add("barchart-wrapper");
+		 ele.appendChild(div);
+		 var data = google.visualization.arrayToDataTable([
+               ['Features', 'Values'],
+               ['InDegree',  .33],
+			   ['OutDegree',  .55],
+               ['ClosenessC',  .66],
+               ['DegreeC',.44],
+			    ['BetweenessC', .88],
+               ['EigenC',.44]
+              
+               
+            ]);
+
+            var options = {title: '',
+            		colors: ['steelblue'],
+					
+            		legend: {position: 'none'}
+            }; 
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.BarChart(document.getElementById('barChart'));
+            chart.draw(data, options);
+			markovButton();
 	
-	function barGraphDegree1(ref){
-        var data = [{
-                "name": "InDegree",
-                "value": 0.33,
-        },
-            {
-                "name": "OutDegree",
-                "value": 0.55,
-        },
-            {
-                "name": "ClosenessC",
-                "value": 0.44,
-        },
-            {
-                "name": "DegreeC",
-                "value": 0.66,
-        },
-            {
-                "name": "BetweenessC",
-                "value": 0.88,
-        },
-            {
-                "name": "EigenC",
-                "value": 0.44,
-        }];
-
-        //sort bars based on value
-       var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-// set the ranges
-var y = d3.scaleBand()
-          .range([height, 0])
-          .padding(0.1);
-
-var x = d3.scaleLinear()
-          .range([0, width]);
-          
-// append the svg object to the body of the page
-// append a 'group' element to 'svg'
-// moves the 'group' element to the top left margin
-	var svg1 = d3.select("#bar").append("div")
-	var svg=svg1.append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", 
-          "translate(" + margin.left + "," + margin.top + ")");
-
-  // format the data
-  data.forEach(function(d) {
-    d.value = +d.value;
-  });
-
-  // Scale the range of the data in the domains
-  x.domain([0, d3.max(data, function(d){ return d.value; })])
-  y.domain(data.map(function(d) { return d.name; }));
-  //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
-
-  // append the rectangles for the bar chart
-  svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      //.attr("x", function(d) { return x(d.sales); })
-      .attr("width", function(d) {return x(d.value); } )
-      .attr("y", function(d) { return y(d.name); })
-      .attr("height", y.bandwidth());
-
-  // add the x Axis
-  svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-  // add the y Axis
-  svg.append("g")
-      .call(d3.axisLeft(y));
-		markovButton()
-    }
+		
+	}
+	
 	function markovButton()
 	{
 		var ele = document.getElementById("bar");
@@ -449,147 +410,38 @@ var x = d3.scaleLinear()
 	ele.appendChild(div);
 		
 	}
-    function barGraphDegree(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 260 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['InDegree', 'OutDegree'];
-        var attributes_values = [nodeData.in_degree, nodeData.out_degree];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
+	function barGraphDegree(ref)
+	{
+		 var ele = document.getElementById("bar");
+		 var div=document.createElement("div");
+		 div.id="barChart";
+		  div.classList.add("barchart-wrapper");
+		 ele.appendChild(div);
+		var nodeData = ref.childNodes[0].__data__;
+		 var data = google.visualization.arrayToDataTable([
+               ['Features', 'Values'],
+               ['InDegree',  nodeData.in_degree/100],
+			   ['OutDegree',  nodeData.out_degree/100],
+               ['ClosenessC',  nodeData.closeness_c],
+               ['DegreeC',nodeData.degree_c],
+			    ['BetweenessC',  nodeData.betweeness_c],
+               ['EigenC',nodeData.eigen_c]
+              
+               
+            ]);
 
-        var attributes_json = JSON.stringify(attributes_array);
+            var options = {title: '',
+            		colors: ['steelblue'],
+					
+            		legend: {position: 'none'}
+            }; 
 
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
-
-        var xAxis = d3.axisBottom(x);
-
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {             
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
-        })
-        
-        var svg = d3.select("#bar").append("svg")
-        .attr("width", 300)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 25]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-    }
-
-    function barGraphCentrality(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 460 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
-        var attributes_values = [nodeData.closeness_c, nodeData.degree_c, nodeData.betweeness_c, nodeData.eigen_c];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
-
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
-
-        var xAxis = d3.axisBottom(x);
-
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";
-        })
-        
-        var svg = d3.select("#bar").append("svg")
-        .attr("width", 500)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 0.1]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
-    }
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.BarChart(document.getElementById('barChart'));
+            chart.draw(data, options);
+         
+	}
+   
 }
 
 
@@ -760,6 +612,7 @@ function popupClose()
 	var ele1 = document.getElementById("bar")
 	ele1.innerHTML="";
 }
+
 function markov()
 {
 	var ele = document.getElementById("popup2")
@@ -782,7 +635,6 @@ function markov()
 
     $markov.html(iframeContent);	
 }
-
 function popupClose2()
 {
 	var ele = document.getElementById("popup2")
