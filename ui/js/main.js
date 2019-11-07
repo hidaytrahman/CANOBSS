@@ -24,6 +24,17 @@ function createSomething() {
     hrCustomPopup(title, htmlContent);
 }
 
+function createLiveAnimation() {
+    const title = `<h2>Animated Sequence</h2>`;
+    const htmlContent = `
+    <section class="animated-preview-wrapper">
+        <iframe style="width: 90vw; height: 80vh;" src="./animation/index-animation.html">
+        </iframe>
+    </section>
+        `;
+    hrCustomPopup(title, htmlContent);
+}
+
 function createLiveView() {
     const title = `<h2>Live View</h2>`;
     const htmlContent = `
