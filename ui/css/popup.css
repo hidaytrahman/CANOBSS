@@ -43,7 +43,6 @@
 }
 
 .popup .content {
-  max-height: 30%;
   overflow: auto;
   width: 96vw;
 }
@@ -82,4 +81,26 @@
 
 .secondry-popup .content {
   height: 85vh;
+}
+
+.barchart-wrapper {
+  height: 75vh;
+} 
+
+.markov-button-wrapper{
+  position: absolute;
+  top: 4vh;
+  right: 2vw;
+}
+
+.markov-button-wrapper button{
+  box-shadow: 1px 0 1px 0px #000;
+    border: 0;
+    margin: 0%;
+    background: #F44336;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    /* padding: 6px 10px; */
+    display: block;
 }

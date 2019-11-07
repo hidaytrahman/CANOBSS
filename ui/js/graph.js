@@ -401,13 +401,14 @@ function draw(date, id) {
 	function markovButton()
 	{
 		var ele = document.getElementById("bar");
-		var div = document.createElement("div");
+        var div = document.createElement("div");
+        div.className = 'markov-button-wrapper';
 		var button = document.createElement("input");
-    button.type = "button";
-    button.value = "Markov Chain";
-    button.onclick = markov;
-    div.appendChild(button);
-	ele.appendChild(div);
+        button.type = "button";
+        button.value = "Behaviour Analysis";
+        button.onclick = markov;
+        div.appendChild(button);
+        ele.appendChild(div);
 		
 	}
 	function barGraphDegree(ref)
