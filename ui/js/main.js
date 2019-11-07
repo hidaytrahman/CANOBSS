@@ -66,7 +66,8 @@ function createLiveView() {
 </section>
         `;
     hrCustomPopup(title, htmlContent);
-    draw(getDateValues()[0], "mainSvg");
+
+    createGraph(getDateValues()[0], "mainSvg");
 }
 
 

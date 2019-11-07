@@ -428,6 +428,7 @@ function draw(date, id) {
         ele.appendChild(div);
 
     }
+
     function barGraphDegree(ref) {
         var ele = document.getElementById("bar");
         var div = document.createElement("div");
@@ -472,53 +473,17 @@ function createJSONTimeGraph() {
     var date2 = document.getElementById("graphDate2").value;
     var finalDate2 = date2.slice(8, 10) + "-" + date2.slice(5, 7) + "-" + date2.slice(0, 4);
 
-    var data_json_date1 = { "date": finalDate1 };
-    var data_json_date2 = { "date": finalDate2 };
+    // var data_json_date1 = { "date": finalDate1 };
+    // var data_json_date2 = { "date": finalDate2 };
 
-    var file1Exists = false;
-    var file2Exists = false;
-    var filePath1 = '/json/graph-' + finalDate1 + '.json';
-    var filePath2 = '/json/graph-' + finalDate2 + '.json';
-    file1Exists = fileExists(filePath1);
-    file2Exists = fileExists(filePath2);
-
-    if (!file1Exists) {
-        $.ajax({
-            type: 'POST',
-            method: 'POST',
-            url: '/timeGraph',
-            data: data_json_date1,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function (resultData) {
-                var svg1 = d3.select("#timeSvg1");
-                svg1.selectAll("*").remove();
-                draw(finalDate1, 'timeSvg1');
-                console.log(resultData);
-            },
-            error: function (resultData) {
-                alert(resultData);
-            }
-        });
-    }
-    if (!file2Exists) {
-        $.ajax({
-            type: 'POST',
-            method: 'POST',
-            url: '/timeGraph',
-            data: data_json_date2,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function (resultData) {
-                var svg2 = d3.select("#timeSvg2");
-                svg2.selectAll("*").remove();
-                draw(finalDate2, 'timeSvg2');
-                console.log(resultData);
-            },
-            error: function (resultData) {
-                alert(resultData.responseText + ":" + finalDate2);
-            }
-        });
-    }
-
+    // var file1Exists = false;
+    // var file2Exists = false;
+    // var filePath1 = '/json/graph-' + finalDate1 + '.json';
+    // var filePath2 = '/json/graph-' + finalDate2 + '.json';
+    // file1Exists = fileExists(filePath1);
+    // file2Exists = fileExists(filePath2);
+    createGraph(finalDate1, "timeSvg1");
+    createGraph(finalDate2, "timeSvg2");
     getTop5Diff(finalDate1, finalDate2);
 }
 
@@ -531,8 +496,6 @@ function createTimeGraphs() {
     document.getElementById('graphDate1').value = dateValues[3]
     document.getElementById('graphDate2').value = dateValues[1]
     createJSONTimeGraph();
-    draw(dateValues[2], "timeSvg1");
-    draw(dateValues[0], "timeSvg2");
 }
 
 function getTop5Diff(date1, date2) {
@@ -573,7 +536,6 @@ function getDateValues() {
     return [currentDateToSearch, currentDateToShow, yesterdayDateToSearch, yesterdayDateToShow];
 }
 
-
 function responsivefy(svg) {
     // get container + svg aspect ratio
     var container = d3.select(svg.node().parentNode),
@@ -600,6 +562,7 @@ function responsivefy(svg) {
         svg.attr("height", Math.round(targetWidth / aspect));
     }
 }
+
 function popupClose() {
     var ele = document.getElementById("popup1")
     ele.style.visibility = "";
@@ -629,6 +592,7 @@ function markov() {
 
     $markov.html(iframeContent);
 }
+
 function popupClose2() {
     var ele = document.getElementById("popup2")
     ele.style.visibility = "";
@@ -637,10 +601,36 @@ function popupClose2() {
     ele1.innerHTML = "";
 }
 
-
 function fileExists(url) {
     var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
     http.send();
     return http.status == 200;
+}
+
+function createGraph(date,svg_id){
+    var path = '/json/graph-' + date + '.json';
+    var exists = fileExists(path);
+    var data_json_date = { "date": date };
+    if(!exists){
+        $.ajax({
+            type: 'POST',
+            method: 'POST',
+            url: '/timeGraph',
+            data: data_json_date,
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (resultData) {
+                var svg = d3.select("#"+svg_id);
+                svg.selectAll("*").remove();
+                draw(date, svg_id);
+                console.log(resultData);
+            },
+            error: function (resultData) {
+                console.log(resultData.responseText + ":" + date);
+            }
+        });  
+    }else{
+        d3.select("#"+svg_id).selectAll('*').remove();
+        draw(date, svg_id);
+    }
 }
