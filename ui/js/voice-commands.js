@@ -17,6 +17,11 @@ $(document).ready(function () {
                 },
                 'show me anomaly': function () {
                     createLiveView();
+                    setTimeout(function () {
+                        document.getElementById("searchGraph").value = 'anomaly';
+                        $("#btnSearchGraph").click();
+                    }, 2000);
+
                 },
                 'stop listening': function () {
                     annyang.abort();
