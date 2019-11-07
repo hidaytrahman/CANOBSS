@@ -35,7 +35,6 @@ var notificationExist = localStorage.getItem('notificationList');
 var notificationEnable = localStorage.getItem('notificationEnable');
 function notificationAppearance() {
     // notification appearance handling
-    console.log('notificationEnable', notificationEnable);
     if (notificationEnable) {
         $('.alerts-listing').addClass('showing-feature');
         $('.show-notifications').prop('checked', true);
@@ -100,7 +99,7 @@ function getAlerts() {
         }, 1000);
 
     } else {
-        alert('Create alert first');
+       
     }
 }
 
