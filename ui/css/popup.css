@@ -72,3 +72,14 @@
   left: 0;
   margin: auto;
 }
+
+.secondry-popup {
+
+}
+.secondry-popup .popup {
+  height: 90vh;
+}
+
+.secondry-popup .content {
+  height: 85vh;
+}
