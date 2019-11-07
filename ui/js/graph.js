@@ -386,7 +386,7 @@ function draw(date, id) {
 
             var options = {title: '',
             		colors: ['steelblue'],
-					
+					height: '80vh',
             		legend: {position: 'none'}
             }; 
 
