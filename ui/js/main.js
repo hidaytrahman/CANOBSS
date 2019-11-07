@@ -99,8 +99,17 @@ function createGraphDiff() {
         <div id="divBarDiff">
     
          </div>
-
+         <div id="popupdiff" class="overlay secondry-popup">
+         <div class="popup">
+             <h2>Graph Features Difference</h2>
+             <a class="close" href = javascript:void(0) onclick="popupCloseDiff()">&times;</a>
+             <div id="bardiff"class="content">
+                 
+             </div>
+         </div>
+     </div>
     </section>
+
     `;
 
     hrCustomPopup(title,htmlContent);

@@ -1,87 +1,53 @@
 function showDiffBarGraph() {
-
-  $("#divBarDiff").addClass('showIt');
-  $("#divBarDiff").append('<div class="close-btn">X</div>')
-  $('#divBarDiff').html('');
-  createNegativeBarGraph(attributeDiffs.InDegreeDiff, false, 'In Degree');
-  createNegativeBarGraph(attributeDiffs.OutDegreeDiff, false, 'Out Degree');
-  createNegativeBarGraph(attributeDiffs.ClosenessCDiff, true, 'Closeness Centrality');
-  createNegativeBarGraph(attributeDiffs.DegreeCDiff, true, 'Degree Centraltiy');
-  createNegativeBarGraph(attributeDiffs.BetweennessCDiff, true, 'Betweenness Centrality');
-  createNegativeBarGraph(attributeDiffs.EigenVectorCDiff, true, 'Eigen Vector Centrality');
+  // $("#divBarDiff").addClass('showIt');
+  // $("#divBarDiff").append('<div class="close-btn">X</div>')
+  //$('#divBarDiff').html('');
+  var ele = document.getElementById("popupdiff")
+  ele.style.visibility = "visible";
+  ele.style.opacity = 1;
+  negativeGraphs(attributeDiffs.InDegreeDiff,"Nodes with max In Degree Change","InDegree");
+  negativeGraphs(attributeDiffs.OutDegreeDiff,"Nodes with max Out Degree Change","OutDegree");
+  negativeGraphs(attributeDiffs.ClosenessCDiff,"Nodes with max Closeness Centrality Change","CloseC");
+  negativeGraphs(attributeDiffs.DegreeCDiff,"Nodes with max Degree Centrality Change","DegreeC");
+  negativeGraphs(attributeDiffs.BetweennessCDiff,"Nodes with max Betweenness Centrality Change","BetweenC");
+  negativeGraphs(attributeDiffs.EigenVectorCDiff,"Nodes with max Eigen Vector Centrality Change","EigenC");
+  
 }
 
-function createNegativeBarGraph(data, centrality, name) {
-  var size = {
-    width: 600,
-    height: 300,
-    margin: {
-      top: 20,
-      right: 60,
-      bottom: 30,
-      left: 60
-    }
+function negativeGraphs(data,name,element) {
+
+  var ele = document.getElementById("bardiff");
+  var div = document.createElement("div");
+  div.id = "barChart"+element;
+  //div.style.width='40%';
+  div.classList.add("columnchart-wrapper");
+  ele.appendChild(div);
+  var data = google.visualization.arrayToDataTable([
+      ['Features', 'Difference'],
+      [data[0].name, data[0].value],
+      [data[1].name, data[1].value],
+      [data[2].name, data[2].value],
+      [data[3].name, data[3].value],
+      [data[4].name, data[4].value]
+  ]);
+
+  var options = {
+      title: name,
+      colors: ['steelblue'],
+      height: '80vh',
+      legend: { position: 'none' }
   };
-  var margin = size.margin;
-  var width = size.width - margin.left - margin.right;
-  var height = size.height - margin.top - margin.bottom;
 
-  if (centrality) {
-    var x = d3.scaleLinear()
-      .domain([-0.2, 0.2])
-      .range([0, width]);
-  }
-  else {
-    var x = d3.scaleLinear()
-      .domain([-20, 20])
-      .range([0, width]);
-  }
-  var y = d3.scaleBand()
-    .domain(data.map(d => d.name))
-    .rangeRound([0, height])
-    .padding(0.2);
+  // Instantiate and draw the chart.
+  var chart = new google.visualization.BarChart(document.getElementById(div.id));
+  chart.draw(data, options);
 
-  var xAxis = d3.axisBottom(x);
-
-  var yAxis = d3.axisLeft(y)
-    .tickSize(0);
-
-  var svg = d3.select('#divBarDiff').append('svg')
-    .attr('width', size.width)
-    .attr('height', size.height);
-
-  var chart = svg.append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-  chart.append("g")
-    .append("text")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .attr("transform", "rotate(-90)")
-    .style("text-anchor", "end")
-    .text(name);
-
-  var bar = chart.selectAll('.bar')
-    .data(data)
-    .enter().append('rect')
-    .attr('class', d => `bar ${d.value < 0 ? 'negative' : 'positive'}`)
-    .attr('x', d => x(Math.min(0, d.value)))
-    .attr('y', d => y(d.name))
-    .attr('width', d => Math.abs(x(d.value) - x(0)))
-    .attr('height', y.bandwidth());
-
-  chart.append('g')
-    .attr('transform', `translate(0, ${height})`)
-    .attr('class', 'axis x')
-    .call(xAxis);
-
-  chart.append('g')
-    .attr('class', 'axis y')
-    .attr('transform', `translate(${x(0)}, 0)`)
-    .call(yAxis);
 }
 
-function types(d) {
-  d.value = +d.value;
-  return d;
+function popupCloseDiff() {
+  var ele = document.getElementById("popupdiff")
+  ele.style.visibility = "";
+  ele.style.opacity = 0;
+  var ele1 = document.getElementById("bardiff")
+  ele1.innerHTML = "";
 }
