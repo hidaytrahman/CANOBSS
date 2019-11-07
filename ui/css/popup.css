@@ -104,3 +104,11 @@
     /* padding: 6px 10px; */
     display: block;
 }
+
+.diff-map-container {
+  background: #fff;
+}
+
+.diff-map-container svg{
+  width: 48%
+}

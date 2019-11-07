@@ -77,9 +77,12 @@ myApp.directive('stDiagram', function($compile) {
     var w, h, r = 20;
     var linkElements = {};
     var force = d3.layout.force()
-      .linkDistance(function(d){ return w / 16 + (1 - d.value) * 200 * w / 1200 })
-      .charge(-4000);
-
+     // .linkDistance(function(d){ return w / 16 + (1 - d.value) * 200 * w / 1200 })
+     // .charge(-4000);
+     .linkDistance(200)
+      .charge(-300)
+      .size([w,h]); 
+  
     currentStateG
       .append('circle')
       .attr('r', 10);

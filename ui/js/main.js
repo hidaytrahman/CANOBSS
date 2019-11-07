@@ -82,15 +82,27 @@ function createClusters() {
 
 function createGraphDiff() {
     const title = `<h2>Compare Network</h2>`;
-    const htmlContent = `<input type="date" id="graphDate1">
-    <input type="date" id="graphDate2">
-    <input type="submit" onclick="createJSONTimeGraph()">      <input type="submit" onclick="showDiffBarGraph()" value="Get Difference"><br><br>
-    <svg width="400" height="400" id="timeSvg1" class="timeSvg"></svg>
-    <svg width="400" height="400" id="timeSvg2" class="timeSvg"></svg>
-    <div id="divBarDiff">
+    const htmlContent = `
+    <section class="compare-graph-wrapper">
+        <aside class="controls">
+            <input type="date" id="graphDate1">
+            <input type="date" id="graphDate2">
+            <input type="submit" onclick="createJSONTimeGraph()">      
+            <input type="submit" onclick="showDiffBarGraph()" value="Get Difference">
+        </aside>
+
+        <div class="diff-map-container">
+            <svg width="400" height="400" id="timeSvg1" class="timeSvg"></svg>
+            <svg width="400" height="400" id="timeSvg2" class="timeSvg"></svg>
+        </div>
+
+        <div id="divBarDiff">
     
-    </div>
+         </div>
+
+    </section>
     `;
+
     hrCustomPopup(title,htmlContent);
     createTimeGraphs();
 }

@@ -43,4 +43,8 @@
     .canobss-wrapper #notification-container {
         width: 300px;
     }
+
+    .diff-map-container svg{
+        width: 90%
+    }
 }
