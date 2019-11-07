@@ -46,6 +46,10 @@ def send_images(path):
 def send_json(path):
     return send_from_directory('ui\json', path)
 
+@app.route('/markovchains/<path:path>')
+def send_markov(path):
+    return send_from_directory('ui\markovchains', path)
+
 @app.route('/timeGraph', methods=['POST'])
 def timeGraph():
     date = ""
