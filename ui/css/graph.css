@@ -34,3 +34,24 @@ line {
 .timeSvg{
   outline: 3px solid grey;
 }
+
+#chart {
+  background-color: #ddd;
+}
+
+rect.positive {
+  fill: steelblue;
+}
+
+rect.negative {
+  fill: darkorange;
+}
+
+.axis text {
+  font: 10px sans-serif;
+  fill: black;
+}
+
+.axis.y text {
+  text-anchor: end;
+}

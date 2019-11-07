@@ -698,7 +698,6 @@ function getTop5Diff(date1, date2){
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (resultData) {
             attributeDiffs = resultData;  
-            setTableData(); 
         },
         error: function (resultData) {
             alert(resultData);
@@ -706,25 +705,6 @@ function getTop5Diff(date1, date2){
     });
 }
 
-
-function setTableData(){
-    var attr = $('#attSelect').children("option:selected").val();
-    if(attr === "inDegreeDiff"){var tableData = attributeDiffs.InDegreeDiff;}
-    else if(attr === "outDegreeDiff"){var tableData = attributeDiffs.OutDegreeDiff;}
-    else if(attr === "closenessCDiff"){var tableData = attributeDiffs.ClosenessCDiff;}
-    else if(attr === "degreeCDiff"){var tableData = attributeDiffs.DegreeCDiff;}
-    else if(attr === "betweennessCDiff"){var tableData = attributeDiffs.BetweennessCDiff;}
-    else if(attr === "eigenCDiff"){var tableData = attributeDiffs.EigenVectorCDiff;}
-    $('#attributeDiffTbl tbody').empty();
-    var table = document.getElementById("attributeDiffTbl").getElementsByTagName('tbody')[0];
-    tableData.forEach(function(item, index){          
-        var row = table.insertRow(index);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = item[0];
-        cell2.innerHTML = item[1];            
-    });
-}
 
 function getDateValues(){
     var today = new Date();
