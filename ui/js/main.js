@@ -28,7 +28,7 @@ function createLiveAnimation() {
     const title = `<h2>Animated Sequence</h2>`;
     const htmlContent = `
     <section class="animated-preview-wrapper">
-        <iframe style="width: 90vw; height: 80vh;" src="./animation/index-animation.html">
+        <iframe style="width: 90vw; height: 80vh;" src="./ui/animation/index-animation.html">
         </iframe>
     </section>
         `;
