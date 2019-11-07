@@ -373,13 +373,14 @@ function draw(date, id) {
 		 div.classList.add("barchart-wrapper");
 		 ele.appendChild(div);
 		 var data = google.visualization.arrayToDataTable([
-               ['Features', 'Values'],
-               ['InDegree',  .33],
-			   ['OutDegree',  .55],
-               ['ClosenessC',  .66],
-               ['DegreeC',.44],
-			    ['BetweenessC', .88],
-               ['EigenC',.44]
+            ['Features', 'Values',{role : 'annotation'},{role : 'tooltip'}],
+               ['InDegree',  .33,'0.33','InDegree : Number of incoming connections'],
+                                                   ['OutDegree',  .55,'0.55','OutDegree : Number of outgoing connections'],
+               ['ClosenessC',  .66,'0.66','Closeness Centrality : Average of the shortest path length from one node to every other node'],
+               ['DegreeC',.44,'0.44','Degree Centrality : Degree of a node ( number of edges)'],
+                                                    ['BetweenessC', .88,'0.88','Betweeness Centrality : Percentage of shortest path that include a given node'],
+               ['EigenC',.44,'0.44','Eigen Centrality : Page Rank of a Node']
+
               
                
             ]);
@@ -420,13 +421,14 @@ function draw(date, id) {
 		 ele.appendChild(div);
 		var nodeData = ref.childNodes[0].__data__;
 		 var data = google.visualization.arrayToDataTable([
-               ['Features', 'Values'],
-               ['InDegree',  nodeData.in_degree/100],
-			   ['OutDegree',  nodeData.out_degree/100],
-               ['ClosenessC',  nodeData.closeness_c],
-               ['DegreeC',nodeData.degree_c],
-			    ['BetweenessC',  nodeData.betweeness_c],
-               ['EigenC',nodeData.eigen_c]
+            ['Features', 'Values',{role : 'annotation'},{role : 'tooltip'}],
+            ['InDegree',  nodeData.in_degree/100,nodeData.in_degree/100,'InDegree : Number of incoming connections'],
+            ['OutDegree',  nodeData.out_degree/100,nodeData.out_degree/100,'OutDegree : Number of outgoing connections'],
+            ['ClosenessC',  nodeData.closeness_c,nodeData.closeness_c,'Closeness Centrality : average of the shortest path length from one node to every other node'],
+            ['DegreeC',nodeData.degree_c,nodeData.degree_c,'Degree Centrality : Degree of a node ( number of edges)'],
+                                                 ['BetweenessC',  nodeData.betweeness_c,nodeData.betweeness_c,'Betweeness Centrality : Percentage of shortest path that include a given node'],
+            ['EigenC',nodeData.eigen_c,nodeData.eigen_c,'Eigen Centrality : Page Rank of a Node']
+
               
                
             ]);
