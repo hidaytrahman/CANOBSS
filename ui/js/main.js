@@ -70,7 +70,7 @@ function createClusters() {
 }
 
 function createGraphDiff() {
-    const title = `<h2>Diff 2 Dates</h2>`;
+    const title = `<h2>Compare Network</h2>`;
     const htmlContent = `<input type="date" id="graphDate1">
     <input type="date" id="graphDate2">
     <input type="submit" onclick="createJSONTimeGraph()"><br><br>

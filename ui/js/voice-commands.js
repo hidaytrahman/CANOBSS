@@ -10,13 +10,13 @@ $(document).ready(function () {
                 }
                 ,
                 'show me my network': function () {
-                    alert('network');
+                    createLiveView();
                 },
                 'what has changed in my network': function () {
-                    alert('changed in my network');
+                    createGraphDiff()
                 },
-                'show top five anomalous nodes': function () {
-                    alert('Its anomalous nodes');
+                'show me anomaly': function () {
+                    createLiveView();
                 },
                 'stop listening': function () {
                     annyang.abort();
