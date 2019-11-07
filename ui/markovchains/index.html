@@ -104,17 +104,19 @@
     $scope.$watch('speedRange', function (speed) {
       $scope.duration = 2000 / +speed;
     });
+    
+    var hash = utils.getHash();
+    var labels = hash.states;
     $scope.updateTransitionMatrix = function (matrix) {
       var prev = $scope.transitionMatrix;
       $scope.transitionMatrix = matrix;
       if (!$scope.states || matrix.length !== prev.length) {
         $scope.states = matrix.map(function (d, i) {
-          return { label: String.fromCharCode(65 + i), index: i };
+          return { label: labels[i], index: i };
         });
       }
       utils.setHash({ tm: matrix });
     };
-    var hash = utils.getHash();
     if (hash && hash.tm) $scope.updateTransitionMatrix(hash.tm);
     else $scope.updateTransitionMatrix([
       [0.5, 0.5],

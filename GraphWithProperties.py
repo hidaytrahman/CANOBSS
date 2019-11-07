@@ -46,6 +46,10 @@ def send_images(path):
 def send_json(path):
     return send_from_directory('ui\json', path)
 
+@app.route('/markovchains/<path:path>')
+def send_markov(path):
+    return send_from_directory('ui\markovchains', path)
+
 @app.route('/timeGraph', methods=['POST'])
 def timeGraph():
     date = ""
@@ -210,12 +214,56 @@ def top5ChangeFeatures():
     sorted_eigenvector_centrality = sorted({k: v for k, v in eigenvector_centrality_diff.items()}.items(), key = 
              lambda kv:(abs(kv[1]), kv[0]), reverse=True)[:diffcount]
     
-    result = {"InDegreeDiff":sorted_in_degree, 
-              "OutDegreeDiff":sorted_out_degree,
-              "ClosenessCDiff":sorted_closeness_centrality,
-              "DegreeCDiff":sorted_degree_centrality,
-              "BetweennessCDiff":sorted_betweenness_centrality,
-              "EigenVectorCDiff":sorted_eigenvector_centrality}
+    arr_sorted_indegree=[]
+    for k,v in sorted_in_degree:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_indegree.append(dict_single_node)
+
+    arr_sorted_outdegree=[]
+    for k,v in sorted_out_degree:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_outdegree.append(dict_single_node)
+
+    arr_sorted_closeness_c=[]
+    for k,v in sorted_closeness_centrality:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_closeness_c.append(dict_single_node)
+
+    arr_sorted_betweenness_c=[]
+    for k,v in sorted_betweenness_centrality:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_betweenness_c.append(dict_single_node)
+
+    arr_sorted_degree_c=[]
+    for k,v in sorted_degree_centrality:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_degree_c.append(dict_single_node)
+
+    arr_sorted_eigen_c=[]
+    for k,v in sorted_eigenvector_centrality:
+        dict_single_node = {}
+        dict_single_node["name"] = k
+        dict_single_node["value"] = v
+        arr_sorted_eigen_c.append(dict_single_node)
+    
+
+
+    result = {"InDegreeDiff":arr_sorted_indegree, 
+              "OutDegreeDiff":arr_sorted_outdegree,
+              "ClosenessCDiff":arr_sorted_closeness_c,
+              "DegreeCDiff":arr_sorted_degree_c,
+              "BetweennessCDiff":arr_sorted_betweenness_c,
+              "EigenVectorCDiff":arr_sorted_eigen_c}
     
     return jsonify(result)
     
