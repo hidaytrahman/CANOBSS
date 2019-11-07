@@ -8,15 +8,14 @@ function draw(date, id) {
         .velocityDecay(0.1)
         .force("x", d3.forceX(width / 2).strength(.1))
         .force("y", d3.forceY(height / 2).strength(.1))
-        .force("charge", d3.forceManyBody().strength(-40))
-        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(50).strength(1));
+        .force("charge", d3.forceManyBody().strength(-10))
+        .force("link", d3.forceLink().id(function (d) { return d.id; }).distance(25).strength(1));
         //.force('collision', d3.forceCollide().strength(2).radius(function (d) { return radius + .75 }));
 
     var nodes_list = [];
     var svg = d3.select("#" + id)
         .attr("width", width)
-        .attr("height", height)
-        .call(responsivefy);
+       // .call(responsivefy);
 	var defs = svg.append("svg:defs")
 	defs.append("pattern")
 	.attr("id", function(d) { return "pc"; })
@@ -145,6 +144,7 @@ function draw(date, id) {
 				}
 				else
 				{
+					document.getElementById("popuph2").textContent = 'Graph Features of Node';
 					barGraphDegree(this);
 					barGraphCentrality(this);
 				}
@@ -339,42 +339,18 @@ function draw(date, id) {
 
 	function anGraphDegree(ref)
 	{
-		 var data = [95]
-
-    var width = 500,
-        barHeight = 20,
-        margin = 1;
-
-    var scale = d3.scaleLinear()
-                 .domain([d3.min(data), d3.max(data)])
-                 .range([50, 500]);
-	
-    var svg1 = d3.select("#bar");
-	svg1.append("h3")
-		.text("Current Flow Difference")
-    var svg=svg1.append("svg")
-                  .attr("width", width)
-                  .attr("height", barHeight * data.length);
-
-    var g = svg.selectAll("g")
-                  .data(data)
-                  .enter()
-                  .append("g")
-                  .attr("transform", function (d, i) {
-                      return "translate(0," + i * barHeight + ")";
-                  });
-
-    g.append("rect")
-       .attr("width", function (d) {
-           return scale(d);
-       })
-       .attr("height", barHeight - margin)
-
-    g.append("text")
-       .attr("x", function (d) { return (scale(d)); })
-       .attr("y", barHeight / 2)
-       .attr("dy", ".35em")
-       .text(function (d) { return d; });
+		 
+		 var ele = document.getElementById("bar");
+		var div = document.createElement("div");
+		document.getElementById("popuph2").textContent = 'Anamoly Score of Node';
+		
+		var span = document.createElement("span");
+		span.appendChild(document.createTextNode("Last flow of this node is 95% different"));
+		
+    
+	div.appendChild(span);
+	ele.appendChild(div);
+		 
 	   
 	 barGraphDegree1(ref);
 	
@@ -382,80 +358,83 @@ function draw(date, id) {
 	}
 	
 	function barGraphDegree1(ref){
-        var margin = {top: 40, right: 20, bottom: 30, left: 70},
-                    width = 700 - margin.left - margin.right,
-                    height = 500 - margin.top - margin.bottom;
+        var data = [{
+                "name": "InDegree",
+                "value": 0.33,
+        },
+            {
+                "name": "OutDegree",
+                "value": 0.55,
+        },
+            {
+                "name": "ClosenessC",
+                "value": 0.44,
+        },
+            {
+                "name": "DegreeC",
+                "value": 0.66,
+        },
+            {
+                "name": "BetweenessC",
+                "value": 0.88,
+        },
+            {
+                "name": "EigenC",
+                "value": 0.44,
+        }];
+
+        //sort bars based on value
+       var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
 // set the ranges
+var y = d3.scaleBand()
+          .range([height, 0])
+          .padding(0.1);
 
-        var nodeData = ref.childNodes[0].__data__;
-      //  $('#popup1').show();
-    
-        var attributes_name = ['InDegree', 'OutDegree','ClosenessC', 'DegreeC', 'BetweenessC', 'EigenC'];
-        var attributes_values = [.33,.22,.44,.33,.55,.32];
-        var attributes_array = [];
-        attributes_name.forEach(function(k,i){
-            var temp_dict = {'name' : k, 'value' : attributes_values[i]};
-            attributes_array.push(temp_dict);
-        })
+var x = d3.scaleLinear()
+          .range([0, width]);
+          
+// append the svg object to the body of the page
+// append a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+	var svg1 = d3.select("#bar").append("div")
+	var svg=svg1.append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
 
-        var attributes_json = JSON.stringify(attributes_array);
+  // format the data
+  data.forEach(function(d) {
+    d.value = +d.value;
+  });
 
-        var x = d3.scaleBand()
-        .rangeRound([0, width], .1);
-        
-        var y = d3.scaleLinear()
-            .range([height, 0]);
+  // Scale the range of the data in the domains
+  x.domain([0, d3.max(data, function(d){ return d.value; })])
+  y.domain(data.map(function(d) { return d.name; }));
+  //y.domain([0, d3.max(data, function(d) { return d.sales; })]);
 
-        var xAxis = d3.axisBottom(x);
+  // append the rectangles for the bar chart
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      //.attr("x", function(d) { return x(d.sales); })
+      .attr("width", function(d) {return x(d.value); } )
+      .attr("y", function(d) { return y(d.name); })
+      .attr("height", y.bandwidth());
 
-        var yAxis = d3.axisLeft(y).ticks(10, "");
-        
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {             
-                return "<strong>Value:</strong> <span style='color:red'>" + d.value + "</span>";           
-        })
-        
-        var svg1 = d3.select("#bar")
-		svg1.append("div");
-		var svg=svg1.append("svg")
-        .attr("width", 700)
-        .attr("height", 500)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  // add the x Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-        svg.call(tip);
-
-        x.domain(attributes_array.map(function(d) { return d.name; }));
-        y.domain([0, 1]);
-
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -36)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Value");
-
-        svg.selectAll(".bar")
-        .data(attributes_array)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.name); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
 		markovButton()
     }
 	function markovButton()

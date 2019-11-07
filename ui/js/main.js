@@ -36,7 +36,7 @@ function createLiveView() {
         <svg width="500" height="500" id="mainSvg"></svg>
         <div id="popup1" class="overlay">
 	<div class="popup">
-		<h2 id="popuph2">Node Details</h2>
+		<h2 id="popuph2">Graph Features of Node</h2>
 		<a class="close" href = javascript:void(0) onclick="popupClose()">&times;</a>
 		<div id="bar"class="content">
 			
@@ -58,21 +58,6 @@ function createLiveView() {
     draw(getDateValues()[0], "mainSvg");
 }
 
-function createIframAnimation() {
-    const title = `<h2>Frame Animation</h2>`;
-    const htmlContent = `
-    <section class="live-preview-wrapper">
-    <div class="iframe-wrapper">
-    <iframe src="http://setosa.io/markov/index.html#%7B%22tm%22%3A%5B%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0.5%2C0%2C0%2C0%2C0%2C0%2C0.5%2C0%5D%2C%5B0%2C0.333333333%2C0%2C0%2C0.666666667%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0.04%2C0%2C0.12%2C0.52%2C0.04%2C0.12%2C0.04%2C0%2C0%2C0.12%5D%2C%5B0%2C0%2C0.019607843%2C0.176470588%2C0.539215686%2C0.009803922%2C0.039215686%2C0%2C0.009803922%2C0.009803922%2C0.196078431%5D%2C%5B0%2C0%2C0%2C0%2C0.5%2C0%2C0%2C0.5%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.875%2C0%2C0%2C0%2C0%2C0.125%2C0%5D%2C%5B0%2C0%2C0%2C0.666666667%2C0.333333333%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.5%2C0%2C0%2C0%2C0%2C0%2C0.5%5D%2C%5B0%2C0%2C0%2C0.166666667%2C0.5%2C0%2C0%2C0%2C0.166666667%2C0%2C0.166666667%5D%2C%5B0%2C0%2C0.026315789%2C0%2C0.447368421%2C0%2C0.026315789%2C0.026315789%2C0.078947368%2C0.078947368%2C0.315789474%5D%5D%7D" height="100%" width="100%">
-    </iframe>
-    </div>
-    
-    </section>
-        `;
-    hrCustomPopup(title, htmlContent);
-    draw(getDateValues()[0], "mainSvg");
-}
-
 
 
 function createClusters() {
@@ -84,22 +69,13 @@ function createClusters() {
 
 }
 
-
-
 function createGraphDiff() {
     const title = `<h2>Diff 2 Dates</h2>`;
-    const htmlContent = `
-    <section class="diff-wrapper">
-    <div class="controls">
-    <input type="date" id="graphDate1">
+    const htmlContent = `<input type="date" id="graphDate1">
     <input type="date" id="graphDate2">
     <input type="submit" onclick="createJSONTimeGraph()"><br><br>
-    </div>
-    <div class="map-area-wrapper">
     <svg width="400" height="400" id="timeSvg1" class="timeSvg"></svg>
     <svg width="400" height="400" id="timeSvg2" class="timeSvg"></svg>
-    </div>
-    
     <div>
     <select name="selector" id="attSelect">
     <option value="inDegreeDiff" selected="selected">In Degree</option>
@@ -119,7 +95,6 @@ function createGraphDiff() {
     <tbody></tbody>
     </table>
     </div>
-    </section>
     `;
     hrCustomPopup(title,htmlContent);
     createTimeGraphs();
