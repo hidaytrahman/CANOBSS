@@ -9,8 +9,8 @@
     <link href="css/desktop.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/barchart.css">
     <link rel="stylesheet" type="text/css" href="css/graph.css">
-	<link rel="stylesheet" type="text/css" href="css/popup.css">
-	<link href="css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/popup.css">
+    <link href="css/responsive.css" rel="stylesheet">
 
     <title>CANOBSS</title>
 
@@ -19,7 +19,6 @@
             background: url('./images/background.PNG') center center no-repeat;
             background-size: cover;
         }
-
     </style>
 </head>
 
@@ -46,24 +45,32 @@
                                     for="switch">Toggle</label>
                             </div>
                             <div class="input-area">
-                                <label>Something</label>
+                                <label>If</label>
                                 <select class="set-control something1">
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
+                                    <option value="InDegree">InDegree</option>
+                                    <option value="OutDegree">OutDegree</option>
+                                    <option value="ClosenessC">ClosenessC</option>
+                                    <option value="DegreeC">DegreeC</option>
+                                    <option value="BetweennessC">BetweennessC</option>
+                                    <option value="EigenVectorC">EigenVectorC</option>
                                 </select>
                                 <label>of</label>
                                 <select class="set-control something2">
-                                    <option value="1.0.2.5.">1.0.2.5.</option>
-                                    <option value="1.2.8.5.">1.2.8.5.</option>
-                                    <option value="1.4.8.5.">1.4.8.5.</option>
-                                    <option value="1.5.8.5.">1.5.8.5.</option>
-                                    <option value="1.6.8.5.">1.6.8.5.</option>
+                                    <option value="192.168.2.79">192.168.2.79</option>
+                                    <option value="192.168.2.202">192.168.2.202</option>
+                                    <option value="192.168.2.182">192.168.2.182</option>
+                                    <option value="192.168.2.146">192.168.2.146</option>
+                                    <option value="192.168.2.183">192.168.2.183</option>
+                                    <option value="192.168.2.216">192.168.2.216</option>
+                                </select>
+                                <select class="set-control increase-decrease">
+                                    <option value="increases">increases</option>
+                                    <option value="decreases">decreases</option>
                                 </select>
                                 <label>by</label>
                                 <input type="text" class="set-control something3" required
                                     placeholder="Input something" />
+                                <label>%</label>
                                 <div class="submit-button">Set</div>
 
                             </div>
@@ -151,7 +158,13 @@
     <div class="desktop">
         <div class="window-area">
             <div class="logo-wrapper">
-                <img src="./images/logo-canobss.png" alt="">
+                <div class="left-side">
+                    <img src="./images/logo-canobss.png" alt="">
+                </div>
+                <div class="right-side">
+                    <img src="./images/thales-logo.png" style="background: #fff;" alt="">
+
+                </div>
             </div>
             <!-- logo wrapper  -->
 
@@ -170,9 +183,9 @@
                         <span class="branding-bar">Live Network</span>
                     </a>
                     <a href="#" onclick="createGraphDiff()" class="bg-orange fg-white tile-custom-view">
-                            <span class="mif-versions icon"></span>
-                            <span class="branding-bar">Compare Network</span>
-                        </a>
+                        <span class="mif-versions icon"></span>
+                        <span class="branding-bar">Compare Network</span>
+                    </a>
                     <div onclick="createClusters()" class="bg-brown fg-white tile-custom-view">
                         <span class="mif-cloud icon"></span>
                         <span class="branding-bar">Clustering</span>
@@ -208,12 +221,11 @@
             <!-- Tiles wrapper end here -->
 
         </div>
-        
+
     </div>
 
 
-    <script src="js/vendor/jquery-2.2.4.min.js"
-        crossorigin="anonymous"></script>
+    <script src="js/vendor/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/vendor/annyang.min.js"></script>
     <script src="js/voice-commands.js"></script>
@@ -223,14 +235,14 @@
     <script src="js/notifications.js"></script>
     <script src="js/barchart.js"></script>
     <script src="js/graph.js"></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-	  </script>
+        google.charts.load("current", { packages: ["corechart"] });
+    </script>
     <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
     <!-- AJAX Stuff-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-	<script src="js/vendor/axios.min.js"></script>
+    <script src="js/vendor/axios.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 

@@ -61,10 +61,11 @@ function setAlert() {
         var something1 = inputs.find('.something1').val();
         var something2 = inputs.find('.something2').val();
         var something3 = inputs.find('.something3').val();
+        var inc = inputs.find('.increase-decrease').val();
         if (something3 == '') {
             alert('Please enter value');
         } else {
-            var notification = something1 + ' of a ' + something2 + ' by ' + something3;
+            var notification = something1 + ' of a ' + something2 +' '+inc+' by ' + something3+' %';
             notificationsList.push(notification)
             localStorage.setItem('notificationList', notificationsList);
             $('.set-alert-form').removeClass('showIt');

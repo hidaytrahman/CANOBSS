@@ -572,7 +572,6 @@ input[type=text].input-text {
 
 
 .charm-top {
-  height: 282px;
   overflow-y: scroll;
 }
 
@@ -894,14 +893,47 @@ input[type=text].input-text {
 
 .logo-wrapper {
   position: absolute;
-  top: 8%;
-  text-align: center;
-  width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    display: flex;
+    text-align: center;
+    align-content: space-around;
+    max-width: initial;
+    margin: auto;
+    padding: 3px 3%;
+    align-items: baseline;
 }
 
+.logo-wrapper .left-side,
+.logo-wrapper .right-side {
+  width: 49%;
+}
+
+.logo-wrapper .left-side {
+  text-align: left;
+}
+
+.logo-wrapper .right-side {
+  text-align: right;
+}
 .logo-wrapper img {
   background: #0f1417d9;
   padding: 1%;
-  border-radius: 16px;
-  border: 5px solid #272525;
+  border-radius: 12px;
+  width: 100px;
+  max-width: 135px;
+}
+
+.ip-info-hr {
+  position: absolute;
+  z-index: 99999;
+  width: 100%;
+  background: #fff;
+  max-width: 206px;
+  padding: 1%;
+  font-size: 11px;
+  top: -3px;
+  right: 0;
 }

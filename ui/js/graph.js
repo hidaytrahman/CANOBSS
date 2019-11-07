@@ -370,7 +370,7 @@ function draw(date, id) {
         document.getElementById("popuph2").textContent = 'Anamoly Score of Node';
 
         var span = document.createElement("span");
-        span.appendChild(document.createTextNode("Last flow of this node is 95% different"));
+        span.innerHTML = "Last flow of this node is <strong>95%</strong> different from its historical traffic";
 
 
         div.appendChild(span);
@@ -411,19 +411,22 @@ function draw(date, id) {
         // Instantiate and draw the chart.
         var chart = new google.visualization.BarChart(document.getElementById('barChart'));
         chart.draw(data, options);
-        markovButton();
+        markovButton(ref.childNodes[0].__data__.id);
 
 
     }
 
-    function markovButton() {
+    function markovButton(ip) {
         var ele = document.getElementById("bar");
         var div = document.createElement("div");
         div.className = 'markov-button-wrapper';
         var button = document.createElement("input");
         button.type = "button";
         button.value = "Behaviour Analysis";
-        button.onclick = markov;
+        button.addEventListener('click', function () {
+            markov(ip);
+        })
+
         div.appendChild(button);
         ele.appendChild(div);
 
@@ -608,7 +611,7 @@ function popupClose() {
     ele1.innerHTML = "";
 }
 
-function markov() {
+function markov(ip) {
     var ele = document.getElementById("popup2")
     ele.style.visibility = "visible";
     ele.style.opacity = 1;
@@ -619,6 +622,11 @@ function markov() {
     var frameAfter = domainName + '%7B%22states%22%3A%5B%221%22%2C%22A%22%2C%22B%22%2C%22D%22%2C%22E%22%2C%22d%22%2C%22e%22%2C%22r%22%2C%22s%22%2C%22u%22%2C%22v%22%5D%2C%22tm%22%3A%5B%5B0%2C0%2C0%2C0%2C1%2C0%2C0%2C0%2C0%2C0%2C0%5D%2C%5B0%2C0.125%2C0%2C0.25%2C0%2C0%2C0%2C0%2C0%2C0.125%2C0.5%5D%2C%5B0%2C0.333333333%2C0%2C0%2C0.333333333%2C0%2C0%2C0.333333333%2C0%2C0%2C0%5D%2C%5B0%2C0.08%2C0%2C0.12%2C0.36%2C0.08%2C0.12%2C0.12%2C0.04%2C0%2C0.08%5D%2C%5B0%2C0%2C0.0125%2C0.175%2C0.575%2C0.05%2C0.0875%2C0%2C0.0125%2C0.0125%2C0.075%5D%2C%5B0%2C0%2C0.166666667%2C0%2C0.5%2C0%2C0.166666667%2C0.166666667%2C0%2C0%2C0%5D%2C%5B0%2C0%2C0%2C0%2C0.75%2C0%2C0.083333333%2C0%2C0%2C0.083333333%2C0.083333333%5D%2C%5B0%2C0.076923077%2C0.076923077%2C0.307692308%2C0%2C0%2C0%2C0.307692308%2C0.076923077%2C0%2C0.153846154%5D%2C%5B0%2C0.181818182%2C0%2C0.090909091%2C0%2C0%2C0%2C0.090909091%2C0.363636364%2C0%2C0.272727273%5D%2C%5B0%2C0%2C0%2C0.166666667%2C0.5%2C0%2C0%2C0%2C0.166666667%2C0%2C0.166666667%5D%2C%5B0%2C0.034482759%2C0%2C0%2C0.275862069%2C0%2C0%2C0.103448276%2C0.137931034%2C0.103448276%2C0.344827586%5D%5D%7D';
     var iframeContent = `
     <section class="markov-wrapper">
+    <div class="ip-info-hr">
+        <strong>Infected Node: </strong><span>`+ ip + `</span>
+        <strong>Destination Node: </strong><span>192.168.77.99</span>
+    </div>
+
         <div class="iframe-wrapper">
             <iframe class="frame-mark frame-before" src=`+ frameBefore + ` height="100%" width="100%"></iframe>
             <iframe class="frame-mark frame-during" src=`+ frameDuring + ` height="100%" width="100%"></iframe>
