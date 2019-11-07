@@ -50,6 +50,10 @@ def send_json(path):
 def send_markov(path):
     return send_from_directory('ui\markovchains', path)
 
+@app.route('/animation/<path:path>')
+def send_animation(path):
+    return send_from_directory('ui\animation', path)
+
 @app.route('/timeGraph', methods=['POST'])
 def timeGraph():
     date = ""
