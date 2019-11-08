@@ -1,6 +1,6 @@
 # CANOBSS
+Cyber Anomalous Behavioural Security System
 
-### How to run
-
-#### open cmd and run http-server if you have node and run on specific port
-
+#RUN with python.
+For Windows : python GraphWithProperties.py
+FOr Linux : python run.py
