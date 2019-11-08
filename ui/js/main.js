@@ -75,9 +75,12 @@ function createLiveView() {
 function createClusters() {
     const title = `<h2>Cluster</h2>`;
     const htmlContent = `
-    <h2>Hey this is cluster</h2>
+    <section class="live-preview-wrapper">
+          <svg width="500" height="500" id="clusterSvg"></svg>       
+</section>
     `;
     hrCustomPopup(title, htmlContent);
+    createGraph(getDateValues()[0], "clusterSvg");
 
 }
 

@@ -14,7 +14,7 @@ function draw(date, id) {
 
     var nodes_list = [];
     var svg;
-    if (id == "mainSvg") {
+    if (id == "mainSvg" || id == "clusterSvg") {
         svg = d3.select("#" + id)
             .attr("width", width)
             .call(responsivefy);
@@ -104,8 +104,14 @@ function draw(date, id) {
         graph = g;
         store = $.extend(true, {}, g);
         graphBack = JSON.parse(JSON.stringify(graph));
-
-        update();
+        if(id=="clusterSvg")
+        {
+            updateCluster();
+        }
+        else{
+            update();
+        }
+        
     });
 
     function update() {
@@ -215,6 +221,84 @@ function draw(date, id) {
 
         simulation.force("link")
             .links(graph.links);
+
+        simulation.alpha(1).alphaTarget(0).restart();
+
+        if (id = "mainSvg") {
+            autocomplete_search();
+        }
+
+    }
+    function updateCluster() {
+        node = node.data(graph.nodes, function (d) { return d.id; });
+
+        node.exit().remove();
+
+
+
+        var newNode = node.enter().append("circle")
+            .attr("class", "node")
+            .attr("r", function (d) {
+                if (blockedNodes.includes(d.id)) {
+                    return 4;
+                }
+                return node_radius(d.cluster);
+            })
+            .style("fill", function (d) {
+                if (blockedNodes.includes(d.id)) {
+                    return "#000000";
+                }
+                return node_color(d.cluster);
+            })
+            .style("stroke", function (d) {
+                if (d.cluster != 0) {
+                    return "#000000";
+                }
+            })
+            // .style("stroke", function(d) { return "#000000" })
+            .on("mousemove", function () {
+                tooltip.style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY + 10) + "px");
+            })
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended)
+            )
+
+        newNode.append("text")
+            .style('font-family', 'Linearicons-Free')
+            .attr('font-size', '20px')
+            .text(function (d) { return '\ue839'; })
+            .attr('x', 40)
+            .attr('y', 40);
+
+        newNode.append("title")
+            .text(function (d) { return "cluster: " + d.cluster + "\n" + "id: " + d.id; });
+
+        node = node.merge(newNode);
+
+        link = link.data(graph.links, function (d) { return d.id; });
+        link.exit().remove();
+
+        newLink = link.enter().append("line")
+            .attr("class", "link");
+        //.style("stroke-width", function(d) { return edge_length(d.sourcecluster); })
+        //.style("stroke", function(d) { return node_color(d.sourcecluster); });
+        newLink.append("title")
+            .text(function (d) {
+                if (d.source instanceof Object) {
+                    return "source: " + d.source.id + "\n" + "target: " + d.target.id;
+                }
+                return "source: " + d.source + "\n" + "target: " + d.target;
+            });
+        link = link.merge(newLink);
+
+        simulation
+            .nodes(graph.nodes)
+            .on("tick", ticked);
+
+       
 
         simulation.alpha(1).alphaTarget(0).restart();
 
