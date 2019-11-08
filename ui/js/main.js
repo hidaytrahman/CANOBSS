@@ -4,14 +4,20 @@ function hrCustomPopup(title, htmlContent) {
     $(popupClass).addClass('isVisible');
     $(popupClass + ' .popup-header').html(title);
 
+    closePopup(popupClass);
+
+    // your dom will render here
+    $(popupClass + ' .content-wrapper .popup-content-section').html(htmlContent);
+}
+
+
+function closePopup(popupClass) {
     // close button
     $(popupClass + ' .close-button').on("click", function () {
         $(popupClass).removeClass('isVisible');
     })
-    title
-    // your dom will render here
-    $(popupClass + ' .content-wrapper .popup-content-section').html(htmlContent);
 }
+
 
 // open your function to show html
 function createSomething() {
@@ -116,20 +122,14 @@ function createGraphDiff() {
 
     `;
 
-    hrCustomPopup(title,htmlContent);
+    hrCustomPopup(title, htmlContent);
     createTimeGraphs();
 }
 
-/*
-function createCluster() {
-    $('.hr-custom-popup').addClass('isVisible');
-
-    $('.hr-custom-popup .close-button').on("click", function () {
-        $(this).parents('.hr-custom-popup').removeClass('isVisible');
-    })
-
-    // create your dom here
-    $('.hr-custom-popup .content-wrapper .popup-content-section').html(`
-            <h2>This is cluster</h2>
-        `);
-}*/
+// Key events
+$(document).keyup(function (e) {
+    if (e.keyCode == 27) {
+        const popupClass = '.hr-custom-popup';
+        $(popupClass).removeClass('isVisible');
+    }
+});
