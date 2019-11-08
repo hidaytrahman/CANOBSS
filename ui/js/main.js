@@ -25,7 +25,7 @@ function createSomething() {
 }
 
 function createLiveAnimation() {
-    const title = `<h2>Animated Sequence</h2>`;
+    const title = `<h2><span class="mif-chart-bars2"></span> Animated Sequence</h2>`;
     const htmlContent = `
     <section class="animated-preview-wrapper">
         <iframe style="width: 90vw; height: 80vh;" src="./ui/animation/index-animation.html">
@@ -36,7 +36,7 @@ function createLiveAnimation() {
 }
 
 function createLiveView() {
-    const title = `<h2>Live View</h2>`;
+    const title = `<h2><span class="mif-vpn-publ"></span> Live View</h2>`;
     const htmlContent = `
     <section class="live-preview-wrapper">
     <aside class="controls">
@@ -82,7 +82,7 @@ function createClusters() {
 }
 
 function createGraphDiff() {
-    const title = `<h2>Compare Network</h2>`;
+    const title = `<h2><span class="mif-versions icon"></span> Compare Network</h2>`;
     const htmlContent = `
     <section class="compare-graph-wrapper">
         <aside class="controls">

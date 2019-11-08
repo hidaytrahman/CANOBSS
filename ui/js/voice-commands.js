@@ -8,7 +8,6 @@ $(document).ready(function () {
             var commands = {
                 'show me notification': function () {
                     responsiveVoice.speak('OK');
-					alert('notification');
                 }
                 ,
                 'show me my network': function () {
