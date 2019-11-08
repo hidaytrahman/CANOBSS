@@ -1,22 +1,27 @@
 $(document).ready(function () {
 
     $("#speak-out").on("click", function () {
-        $(this).addClass('listner-activated');
+        responsiveVoice.speak('Welcome, How Can I help You?');
+		$(this).addClass('listner-activated');
         if (annyang) {
             // Let's define our first command. First the text we expect, and then the function it should call
             var commands = {
                 'show me notification': function () {
-                    alert('notification');
+                    responsiveVoice.speak('OK');
+					alert('notification');
                 }
                 ,
                 'show me my network': function () {
-                    createLiveView();
+                    responsiveVoice.speak('OK');
+					createLiveView();
                 },
                 'what has changed in my network': function () {
-                    createGraphDiff()
+                    responsiveVoice.speak('OK');
+					createGraphDiff()
                 },
                 'show me anomaly': function () {
-                    createLiveView();
+                    responsiveVoice.speak('OK');
+					createLiveView();
                     setTimeout(function () {
                         document.getElementById("searchGraph").value = 'anomaly';
                         $("#btnSearchGraph").click();
@@ -24,7 +29,8 @@ $(document).ready(function () {
 
                 },
                 'stop listening': function () {
-                    annyang.abort();
+                    responsiveVoice.speak('Good Bye');
+					annyang.abort();
                     $('.btn-voice').removeClass('listner-activated');
                 }
             };
