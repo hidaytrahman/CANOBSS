@@ -137,10 +137,10 @@ function draw(date, id) {
             // .style("stroke", function(d) { return "#000000" })
             .on('mouseover.fade', fade(0.1))
             .on('mouseout.fade', fade(1))
-            .on("mousemove", function () {
+           /* .on("mousemove", function () {
                 tooltip.style("left", (d3.event.pageX) + "px")
                     .style("top", (d3.event.pageY + 10) + "px");
-            })
+            })*/
             .on("click", function (d) {
                 $('#bar').html("");
 
@@ -153,7 +153,6 @@ function draw(date, id) {
                 else {
                     document.getElementById("popuph2").textContent = 'Graph Features of Node';
                     barGraphDegree(this);
-                    barGraphCentrality(this);
                 }
                 // d3.select(this).attr('r', 4)
                 //     .style("fill","#000000")
